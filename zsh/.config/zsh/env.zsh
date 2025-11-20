@@ -23,6 +23,21 @@ export VISUAL=nvim
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 
+# ------------FZF--------------
+# Set up fzf key bindings and fuzzy completion
+export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git "
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
+
+export FZF_DEFAULT_OPTS="--height 50% --layout=default --border --color=hl:#2dd4bf"
+
+# Setup fzf previews
+export FZF_CTRL_T_OPTS="--preview 'bat --color=always -n --line-range :500 {}'"
+export FZF_ALT_C_OPTS="--preview 'eza --icons=always --tree --color=always {} | head -200'"
+
+# fzf preview for tmux
+export FZF_TMUX_OPTS=" -p90%,70% "  
+# -----------------------------
 
 # gdircolors (optional)
 command -v gdircolors &>/dev/null && eval "$(gdircolors)"
@@ -40,30 +55,7 @@ export LESS="-R"
 export PAGER="less"
 
 
-# ================================
-# Plugins / Initializers
-# ================================
 
-# Starship
-if command -v starship &>/dev/null; then
-    # prevent starship zle bug
-    if [[ "${widgets[zle-keymap-select]#user:}" == "starship_zle-keymap-select" || \
-          "${widgets[zle-keymap-select]#user:}" == "starship_zle-keymap-select-wrapped" ]]; then
-        zle -N zle-keymap-select ""
-    fi
-    eval "$(starship init zsh)"
-fi
-
-# Zoxide
-command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
-
-# FZF for Ubuntu / WSL
-if [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]; then
-    source /usr/share/doc/fzf/examples/key-bindings.zsh
-fi
-if [ -f /usr/share/doc/fzf/examples/completion.zsh ]; then
-    source /usr/share/doc/fzf/examples/completion.zsh
-fi
 
 # Atuin
 export ATUIN_NOBIND="true"
