@@ -3,7 +3,17 @@
 # load env vars from .zprofile into the shells
 [[ -f ~/.zprofile ]] && source ~/.zprofile
 
-[ -f "$HOME/oh-my-zsh.sh" ] && source "$HOME/oh-my-zsh.sh"
+export ZSH="$HOME/.oh-my-zsh"
+# zsh plugins
+plugins=(
+  git
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+  fzf-tab
+  web-search
+)
+
+[ -f "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
 
 # --- Zoxide ---
 if command -v zoxide >/dev/null 2>&1; then
@@ -55,15 +65,6 @@ bindkey -M viins '^E' autosuggest-accept
 bindkey -M viins '^P' up-line-or-history
 bindkey -M viins '^N' down-line-or-history
 #----------------------------------------
-# zsh plugins
-plugins=(
-    git 
-    ## with oh-my-zsh and not homebrew
-    # zsh-autosuggestions ( git clone <find link in the repo> and uncomment  )
-    # zsh-syntax-highlighting ( git clone <find link in the repo> and uncomment )
-    web-search
-)
-
 # -------------------ALIAS----------------------
 # These alias need to have the same exact space as written here
 
