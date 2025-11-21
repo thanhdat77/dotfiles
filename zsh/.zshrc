@@ -73,6 +73,7 @@ alias c="clear"
 alias e="exit"
 alias vim="nvim"
 
+export TMUX_CONF="$HOME/.tmux.conf"
 # Tmux 
 alias tmux="tmux -f $TMUX_CONF"
 alias a="attach"

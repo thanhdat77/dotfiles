@@ -47,3 +47,5 @@ if [ ! -d "$ZSH_DIR/custom/plugins/fzf-tab" ]; then
   git clone https://github.com/Aloxaf/fzf-tab \
     "$ZSH_DIR/custom/plugins/fzf-tab"
 fi
+# install yazi 
+sh ./scripts/install_yazi.sh
