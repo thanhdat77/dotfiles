@@ -48,4 +48,4 @@ if [ ! -d "$ZSH_DIR/custom/plugins/fzf-tab" ]; then
     "$ZSH_DIR/custom/plugins/fzf-tab"
 fi
 # install yazi 
-sh ./scripts/install_yazi.sh
+sh ~/scripts/install_yazi.sh
