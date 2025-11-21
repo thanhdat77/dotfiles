@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Simple Neovim Installer — direct download, no checks
+
+# Go to temp dir
+cd /tmp
+
+# Download latest Neovim release
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+
+# Remove old version
+sudo rm -rf /opt/nvim-linux-x86_64
+
+# Extract into /opt
+sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
+
+# Cleanup
+rm -f /tmp/nvim-linux-x86_64.tar.gz
+
+echo "✅ Neovim installed in /opt/nvim-linux-x86_64"
+echo "➡️ Add to PATH if needed: export PATH=\"/opt/nvim-linux-x86_64/bin:\$PATH\""
+

@@ -5,9 +5,9 @@ apt update || echo "⚠️ apt update failed, skipping..."
 
 echo "🔹 Installing base packages..."
  apt install -y \
-  git curl unzip zsh build-essential \
+  git curl unzip zsh build-essential wget tmux \
   ripgrep fzf fd-find bat eza zoxide \
-  just || echo "⚠️ some base packages failed"
+ || echo "⚠️ some base packages failed"
 
 # Fix Debian renames (fd, bat)
 if ! command -v fd &>/dev/null; then
@@ -16,8 +16,6 @@ fi
 if ! command -v bat &>/dev/null; then
    ln -sf $(which batcat) /usr/local/bin/bat || echo "⚠️ bat symlink failed"
 fi
-echo "=== Installing essentials ==="
- apt install -y zsh git curl wget tmux build-essential unzip ripgrep fzf
 
 echo "=== Installing Starship (POSIX sh) ==="
 curl -fsSL https://starship.rs/install.sh | sh -s -- -y
@@ -47,5 +45,6 @@ if [ ! -d "$ZSH_DIR/custom/plugins/fzf-tab" ]; then
   git clone https://github.com/Aloxaf/fzf-tab \
     "$ZSH_DIR/custom/plugins/fzf-tab"
 fi
-# install yazi 
-#sh ~/scripts/install_yazi.sh
+# custom install scripts 
+yazi-install
+nvim-install

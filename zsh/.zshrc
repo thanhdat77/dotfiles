@@ -113,3 +113,4 @@ alias nvim-scratch="NVIM_APPNAME=nvim-scratch nvim"
 # lazygit
 alias lg="lazygit"
 # ---------------------------------------
+export PATH="$HOME/.local/bin:$PATH"

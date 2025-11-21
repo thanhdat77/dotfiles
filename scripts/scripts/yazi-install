@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# Simple Yazi Installer — No checks, no auto-detect, just install
+
+# Download latest release
+wget https://github.com/sxyazi/yazi/releases/latest/download/yazi-x86_64-unknown-linux-gnu.zip -O /tmp/yazi.zip
+
+# Extract
+rm -rf /tmp/yazi
+mkdir -p /tmp/yazi
+unzip -q /tmp/yazi.zip -d /tmp/yazi
+
+# Install binaries
+sudo install -Dm755 /tmp/yazi/yazi-x86_64-unknown-linux-gnu/yazi /usr/local/bin/yazi
+sudo install -Dm755 /tmp/yazi/yazi-x86_64-unknown-linux-gnu/ya   /usr/local/bin/ya
+
+# Install completions (optional)
+sudo install -Dm644 /tmp/yazi/yazi-x86_64-unknown-linux-gnu/completions/_yazi /usr/share/zsh/site-functions/_yazi
+sudo install -Dm644 /tmp/yazi/yazi-x86_64-unknown-linux-gnu/completions/_ya   /usr/share/zsh/site-functions/_ya
+
+# Cleanup
+rm -rf /tmp/yazi /tmp/yazi.zip
+
+echo "✅ Yazi installed successfully!"
