@@ -4,17 +4,17 @@ echo "🔹 Updating system..."
 apt update || echo "⚠️ apt update failed, skipping..."
 
 echo "🔹 Installing base packages..."
- apt install -y \
+apt install -y \
   git curl unzip zsh build-essential wget tmux \
-  ripgrep fzf fd-find bat eza zoxide \
- || echo "⚠️ some base packages failed"
+  ripgrep fzf fd-find bat eza zoxide ||
+  echo "⚠️ some base packages failed"
 
 # Fix Debian renames (fd, bat)
 if ! command -v fd &>/dev/null; then
-   ln -sf $(which fdfind) /usr/local/bin/fd || echo "⚠️ fd symlink failed"
+  ln -sf $(which fdfind) /usr/local/bin/fd || echo "⚠️ fd symlink failed"
 fi
 if ! command -v bat &>/dev/null; then
-   ln -sf $(which batcat) /usr/local/bin/bat || echo "⚠️ bat symlink failed"
+  ln -sf $(which batcat) /usr/local/bin/bat || echo "⚠️ bat symlink failed"
 fi
 
 echo "=== Installing Starship (POSIX sh) ==="
@@ -22,8 +22,8 @@ curl -fsSL https://starship.rs/install.sh | sh -s -- -y
 
 echo "=== Installing Oh-My-Zsh (SAFE MODE) ==="
 RUNZSH=no KEEP_ZSHRC=yes \
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
-  || echo "⚠️ oh-my-zsh install failed"
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" ||
+  echo "⚠️ oh-my-zsh install failed"
 
 ZSH_DIR="$HOME/.oh-my-zsh"
 
@@ -45,6 +45,6 @@ if [ ! -d "$ZSH_DIR/custom/plugins/fzf-tab" ]; then
   git clone https://github.com/Aloxaf/fzf-tab \
     "$ZSH_DIR/custom/plugins/fzf-tab"
 fi
-# custom install scripts 
-yazi-install
-nvim-install
+
+echo "Install atuin"
+curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh

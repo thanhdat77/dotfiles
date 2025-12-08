@@ -112,5 +112,10 @@ alias nvim-scratch="NVIM_APPNAME=nvim-scratch nvim"
 
 # lazygit
 alias lg="lazygit"
+alias nvim-ks='NVIM_APPNAME="nvim-ks" nvim'
 # ---------------------------------------
-export PATH="$HOME/.local/bin:$PATH"
+source $HOME/.local/bin/env
+
+. "$HOME/.atuin/bin/env"
+
+eval "$(atuin init zsh)"
