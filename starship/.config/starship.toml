@@ -1,7 +1,20 @@
 # Full Starship Configuration
 # Combines your advanced theme + minimal setup
 # -------------------------------------------------------------
+format = """
+${custom.pwd_link_start}\
+$directory\
+${custom.pwd_link_end}\
+"""
 
+[custom.pwd_link_start]
+command = 'echo %cd%'  # Change this for other shells or OS
+when = true
+format = "\u001b\\]8;;[file:$output]()\u001b\\\\"
+
+[custom.pwd_link_end]
+format = "\u001b\\]8;;\u001b\\\\"
+when = true
 command_timeout = 3600
 "$schema" = 'https://starship.rs/config-schema.json'
 
@@ -170,7 +183,7 @@ format = '[[ $symbol( $version) ]]($style)'
 
 [python]
 symbol = ""
-format = '[[ $symbol( $version) ]]($style)'
+format = 'via [${symbol}(${version} )(\($virtualenv\) )]($style)'
 
 [docker_context]
 symbol = ""

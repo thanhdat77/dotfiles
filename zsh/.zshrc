@@ -18,6 +18,8 @@ plugins=(
 # --- Zoxide ---
 if command -v zoxide >/dev/null 2>&1; then
     eval "$(zoxide init zsh)"
+    alias cd="z"
+    alias nocd="cd"
 fi
 
 # --- FZF (bindings + completion) ---
@@ -91,7 +93,7 @@ alias nzo="~/scripts/zoxide_openfiles_nvim.sh"
 
 # Next level of an ls 
 # options :  --no-filesize --no-time --no-permissions 
-alias ls="eza --no-filesize --long --color=always --icons=always --no-user" 
+alias ls="eza --no-filesize --long --color=always --icons=always --no-user -la" 
 
 # tree
 alias tree="tree -L 3 -a -I '.git' --charset X "
