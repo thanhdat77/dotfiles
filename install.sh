@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 echo "🔹 Updating system..."
-apt update || echo "⚠️ apt update failed, skipping..."
+sudo apt update || echo "⚠️ apt update failed, skipping..."
 
 echo "🔹 Installing base packages..."
-apt install -y \
+sudo apt install -y \
   git curl unzip zsh build-essential wget tmux \
   ripgrep fzf fd-find bat eza zoxide ||
   echo "⚠️ some base packages failed"

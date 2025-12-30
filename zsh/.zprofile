@@ -1,7 +1,7 @@
 
 export LANG=en_US.UTF-8
 # Add local ~/scripts to the PATH
-export PATH="$HOME/scripts:$PATH"
+export PATH="$HOME/custom_scripts:$PATH"
 # Tmux
 export TMUX_CONF="$HOME/.config/tmux/tmux.conf"
 # Starship PATH
