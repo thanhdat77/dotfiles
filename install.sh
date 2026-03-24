@@ -11,10 +11,10 @@ sudo apt install -y \
 
 # Fix Debian renames (fd, bat)
 if ! command -v fd &>/dev/null; then
-  ln -sf $(which fdfind) /usr/local/bin/fd || echo "⚠️ fd symlink failed"
+  sudo ln -sf $(which fdfind) /usr/local/bin/fd || echo "⚠️ fd symlink failed"
 fi
 if ! command -v bat &>/dev/null; then
-  ln -sf $(which batcat) /usr/local/bin/bat || echo "⚠️ bat symlink failed"
+  sudo ln -sf $(which batcat) /usr/local/bin/bat || echo "⚠️ bat symlink failed"
 fi
 
 echo "=== Installing Starship (POSIX sh) ==="

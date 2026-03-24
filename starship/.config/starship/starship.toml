@@ -11,11 +11,12 @@ ${custom.giturl}\
 $git_branch\
 $git_state\
 $git_status\
+ $nodejs$python$golang$rust$docker_context$c$java$kotlin$haskell$php\
 $line_break\
 $character
 """
 
-right_format = """$all"""
+right_format = """"""
 
 palette = "catppuccin_mocha"
 
@@ -207,7 +208,7 @@ style = "bg:peach"
 format = '[[  $time ](fg:mantle bg:foam)]($style)'
 
 [line_break]
-disabled = true 
+disabled = false
 
 [character]
 disabled = false

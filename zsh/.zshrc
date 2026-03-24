@@ -76,20 +76,23 @@ alias e="exit"
 alias vim="nvim"
 
 export TMUX_CONF="$HOME/.tmux.conf"
-# Tmux 
+# Tmux
 alias tmux="tmux -f $TMUX_CONF"
+# Keep tmux pane_current_path in sync with shell CWD
+[[ -n "$TMUX" ]] && precmd() { tmux refresh-client -S 2>/dev/null; }
 alias a="attach"
 # calls the tmux new session script
-alias tns="~/scripts/tmux-sessionizer"
+alias tns="~/custom_scripts/tmux-sessionizer"
 
 # fzf 
-# called from ~/scripts/
-alias nlof="~/scripts/fzf_listoldfiles.sh"
+# called from ~/custom_scripts/
+alias nlof="~/custom_scripts/fzf_listoldfiles.sh"
 # opens documentation through fzf (eg: git,zsh etc.)
 alias fman="compgen -c | fzf | xargs man"
 
 # zoxide (called from ~/scripts/)
-alias nzo="~/scripts/zoxide_openfiles_nvim.sh"
+alias nzo="~/custom_scripts/zoxide_openfiles_nvim.sh"
+alias ld="lazydocker"
 
 # Next level of an ls 
 # options :  --no-filesize --no-time --no-permissions 
@@ -121,3 +124,7 @@ source $HOME/.local/bin/env
 . "$HOME/.atuin/bin/env"
 
 eval "$(atuin init zsh)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
