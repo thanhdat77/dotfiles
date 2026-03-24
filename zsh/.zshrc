@@ -117,6 +117,20 @@ alias nvim-scratch="NVIM_APPNAME=nvim-scratch nvim"
 
 # lazygit
 alias lg="lazygit"
+
+# docker aliases
+alias dk="sudo docker"
+alias dkc="sudo docker compose"
+alias dkcu="sudo docker compose up -d"
+alias dkcd="sudo docker compose down"
+alias dkcr="sudo docker compose restart"
+alias dkl="sudo docker logs -fn 50"       # dkl <container>
+alias dkps="sudo docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'"
+alias dkpsa="sudo docker ps -a --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'"
+alias dkex="sudo docker exec -it"         # dkex <container> bash
+alias dkrm="sudo docker rm -f"            # dkrm <container>
+alias dkimg="sudo docker images"
+alias dkprune="sudo docker system prune -af --volumes"
 alias nvim-ks='NVIM_APPNAME="nvim-ks" nvim'
 # ---------------------------------------
 source $HOME/.local/bin/env

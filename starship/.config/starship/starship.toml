@@ -12,6 +12,7 @@ $git_branch\
 $git_state\
 $git_status\
  $nodejs$python$golang$rust$docker_context$c$java$kotlin$haskell$php\
+$cmd_duration\
 $line_break\
 $character
 """
@@ -206,6 +207,11 @@ disabled = true
 time_format = "%R"
 style = "bg:peach"
 format = '[[  $time ](fg:mantle bg:foam)]($style)'
+
+[cmd_duration]
+min_time = 2_000
+format = '[ took $duration]($style)'
+style = "yellow"
 
 [line_break]
 disabled = false
