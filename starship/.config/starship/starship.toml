@@ -5,7 +5,7 @@ command_timeout = 3600
 add_newline = false 
 
 format = """
- ➜\
+$hostname ➜\
 $directory\
 ${custom.giturl}\
 $git_branch\
@@ -108,6 +108,13 @@ RedHatEnterprise = "󱄛"
 #style_user = "bg:surface0 fg:text"
 #style_root = "bg:surface0 fg:text"
 #format = '[ $user ]($style)'
+
+[hostname]
+ssh_only = false
+ssh_symbol = " "
+style = "bold fg:green"
+format = "[$ssh_symbol$hostname]($style)"
+detect_env_vars = ["!TMUX"]
 
 [directory]
 style = "sapphire"
@@ -218,10 +225,10 @@ disabled = false
 
 [character]
 disabled = false
-success_symbol = '[𝘹](bold fg:green)'
-error_symbol = '[𝘹](bold fg:red)'
-vimcmd_symbol = '[](bold fg:creen)'
-vimcmd_replace_one_symbol = '[](bold fg:purple)'
-vimcmd_replace_symbol = '[](bold fg:purple)'
-vimcmd_visual_symbol = '[](bold fg:lavender)'
+success_symbol = "[⬢](bold green)"
+error_symbol = "[✘ ](bold fg:red)"
+vimcmd_symbol              = "[N](bold fg:green)"    # Normal
+vimcmd_replace_symbol      = "[R](bold fg:red)"      # Replace
+vimcmd_replace_one_symbol  = "[r](bold fg:yellow)"   # Replace one
+vimcmd_visual_symbol       = "[V](bold fg:magenta)"  # Visual
 

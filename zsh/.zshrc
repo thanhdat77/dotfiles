@@ -42,7 +42,7 @@ fi
 
 # --- Bat (theme support) ---
 if command -v bat >/dev/null 2>&1; then
-    export BAT_THEME="Catppuccin-mocha"
+    export BAT_THEME="OneHalfLight"
 fi
 
 # --- Add Neovim (AppImage extract) ---
@@ -110,6 +110,7 @@ alias gt="git"
 alias ga="git add ."
 alias gs="git status -s"
 alias gc='git commit -m'
+alias gcam="git commit --amend --no-edit"
 alias glog='git log --oneline --graph --all'
 alias gh-create='gh repo create --private --source=. --remote=origin && git push -u --all && gh browse'
 
@@ -124,9 +125,9 @@ alias dkc="sudo docker compose"
 alias dkcu="sudo docker compose up -d"
 alias dkcd="sudo docker compose down"
 alias dkcr="sudo docker compose restart"
-alias dkl="sudo docker logs -fn 50"       # dkl <container>
-alias dkps="sudo docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'"
-alias dkpsa="sudo docker ps -a --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'"
+alias dkl="sudo docker logs -fn 1111"       # dkl <container>
+alias dkps="sudo docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.CreatedAt}}\t{{.Image}}'"
+alias dkpsa="sudo docker ps -a --format 'table {{.Names}}\t{{.Status}}\t{{.CreatedAt}}\t{{.Image}}'"
 alias dkex="sudo docker exec -it"         # dkex <container> bash
 alias dkrm="sudo docker rm -f"            # dkrm <container>
 alias dkimg="sudo docker images"
