@@ -14,15 +14,23 @@ search_with_zoxide() {
             nvim "$file_name"
         fi
     else
-        # With arg: search pattern across zoxide-tracked dirs
-        lines=""
-        while IFS= read -r zdir; do
-            found=$(fd --type f -I -H -E .git -E .git-crypt -E .cache -E .backup -E .vscode "$1" "$zdir" 2>/dev/null)
-            if [ -n "$found" ]; then
-                lines="$lines$found\n"
-            fi
-        done < <(zoxide query -l)
-        lines="${lines%?}"
+        # With arg: search current dir (shallow) -> current dir (deep) -> zoxide dirs
+        lines=$(fd --type f --max-depth 1 -I -H -E .git -E .git-crypt -E .cache -E .backup -E .vscode "$1" . 2>/dev/null)
+
+        if [ -z "$lines" ]; then
+            lines=$(fd --type f -I -H -E .git -E .git-crypt -E .cache -E .backup -E .vscode "$1" . 2>/dev/null)
+        fi
+
+        if [ -z "$lines" ]; then
+            lines=""
+            while IFS= read -r zdir; do
+                found=$(fd --type f -I -H -E .git -E .git-crypt -E .cache -E .backup -E .vscode "$1" "$zdir" 2>/dev/null)
+                if [ -n "$found" ]; then
+                    lines="$lines$found\n"
+                fi
+            done < <(zoxide query -l)
+            lines="${lines%?}"
+        fi
 
         if [ -z "$lines" ]; then
             echo "No matches found." >&2
