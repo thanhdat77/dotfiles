@@ -134,6 +134,10 @@ RUNZSH=no KEEP_ZSHRC=yes \
 ZSH_DIR="$HOME/.oh-my-zsh"
 
 echo "=== Installing Zsh Plugins ==="
+if [ ! -d "$ZSH_DIR/custom/plugins/zsh-vi-mode" ]; then
+  git clone https://github.com/jeffreytse/zsh-vi-mode \
+    "$ZSH_DIR/custom/plugins/zsh-vi-mode"
+fi
 if [ ! -d "$ZSH_DIR/custom/plugins/zsh-autosuggestions" ]; then
   git clone https://github.com/zsh-users/zsh-autosuggestions \
     "$ZSH_DIR/custom/plugins/zsh-autosuggestions"

@@ -7,6 +7,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # zsh plugins
 plugins=(
   git
+  zsh-vi-mode
   zsh-autosuggestions
   zsh-syntax-highlighting
   fzf-tab
@@ -57,16 +58,24 @@ fi
 if command -v wl-copy >/dev/null 2>&1; then
     alias clip="wl-copy"
 fi
-#----- Vim Editing modes & keymaps ------ 
-set -o vi
+
+# ----- Vi mode (zsh-vi-mode plugin) -----
+# Plugin is loaded by Oh-My-Zsh via `plugins=(... zsh-vi-mode ...)`.
+# Keep these settings ABOVE any `bindkey` calls that should apply after vi-mode.
+#
+# Optional: allow `jk` to exit insert mode quickly.
+ZVM_VI_INSERT_ESCAPE_BINDKEY='jk'
+# Optional: show mode changes in the prompt faster (reduces lag with heavy prompts).
+ZVM_REFRESH_PROMPT_ON_MODE_CHANGE=true
 
 export EDITOR=nvim
 export VISUAL=nvim
 
+# Insert-mode bindings (these work nicely alongside zsh-autosuggestions)
 bindkey -M viins '^E' autosuggest-accept
 bindkey -M viins '^P' up-line-or-history
 bindkey -M viins '^N' down-line-or-history
-#----------------------------------------
+#-----------------------------------------
 # -------------------ALIAS----------------------
 # These alias need to have the same exact space as written here
 
@@ -143,3 +152,5 @@ eval "$(atuin init zsh)"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+source /home/fenix/.config/broot/launcher/bash/br
