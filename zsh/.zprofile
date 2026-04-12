@@ -4,8 +4,6 @@ export LANG=en_US.UTF-8
 export PATH="$HOME/custom_scripts:$PATH"
 # Tmux
 export TMUX_CONF="$HOME/.config/tmux/tmux.conf"
-# Starship PATH
-export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 # zsh thing
 export ZSH="$HOME/.oh-my-zsh"
 

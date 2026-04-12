@@ -80,9 +80,9 @@ if [ -d "$ZSH_DIR" ]; then
   [ -d "$ZSH_DIR/custom/plugins/fzf-tab" ] || git clone https://github.com/Aloxaf/fzf-tab "$ZSH_DIR/custom/plugins/fzf-tab"
 fi
 
-say "== atuin"
-if ! have atuin; then
-  curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh || true
+say "== yazi"
+if ! have yazi; then
+  cargo install yazi-fm yazi-cli || true
 fi
 
 say "== cargo tools"
@@ -102,25 +102,38 @@ cargo_install fd-find
 cargo_install bat
 cargo_install eza
 cargo_install broot
+cargo_install atuin
 
 log ""
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$REPO_DIR"
 
-say "== link dotfiles"
-# Canonical linking in this repo is `relink.sh` (direct symlinks).
-if [ -x "$REPO_DIR/relink.sh" ]; then
-  "$REPO_DIR/relink.sh" link
-else
-  say "relink.sh not found; falling back to stow"
-  if ! have stow; then
-    log "Installing stow (requires sudo)..."
-    sudo apt update || true
-    sudo apt install -y stow
-  fi
-  # Mirrors your README recommendations.
-  stow -t "$HOME" zsh tmux starship yazi scripts
+
+if ! have stow; then
+  log "Installing stow (requires sudo)..."
+  sudo apt update || true
+  sudo apt install -y stow
 fi
+
+say "== stow dotfiles"
+# Remove existing symlinks (absolute or stale) before restowing so stow
+# always creates fresh relative symlinks without conflicts.
+STOW_LINKS=(
+  "$HOME/.zshrc"
+  "$HOME/.tmux.conf"
+  "$HOME/.config/starship.toml"
+  "$HOME/.config/yazi"
+  "$HOME/.config/atuin"
+  "$HOME/custom_scripts"
+)
+for link in "${STOW_LINKS[@]}"; do
+  if [ -L "$link" ]; then
+    rm "$link"
+    log "Removed symlink: $link"
+  fi
+done
+
+stow -t "$HOME" zsh tmux starship yazi scripts atuin
 
 say "== done"
 say "Restart shell: exec zsh"
