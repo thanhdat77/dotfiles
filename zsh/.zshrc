@@ -143,14 +143,17 @@ alias dkimg="sudo docker images"
 alias dkprune="sudo docker system prune -af --volumes"
 alias nvim-ks='NVIM_APPNAME="nvim-ks" nvim'
 # ---------------------------------------
-source $HOME/.local/bin/env
+[ -f "$HOME/.local/bin/env" ] && source "$HOME/.local/bin/env"
 
-. "$HOME/.atuin/bin/env"
-
-eval "$(atuin init zsh)"
+# --- Atuin (shell history) ---
+[ -f "$HOME/.atuin/bin/env" ] && . "$HOME/.atuin/bin/env"
+if command -v atuin >/dev/null 2>&1; then
+    eval "$(atuin init zsh)"
+fi
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-source /home/fenix/.config/broot/launcher/bash/br
+# --- Broot ---
+[ -f "$HOME/.config/broot/launcher/bash/br" ] && source "$HOME/.config/broot/launcher/bash/br"

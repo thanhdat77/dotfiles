@@ -2,21 +2,22 @@
 
 set -euo pipefail
 
-log() { printf '%s\n' "$*"; }
+VERBOSE="${VERBOSE:-0}"
+
+say() { printf '%s\n' "$*"; }
+log() { [ "$VERBOSE" = "1" ] && printf '%s\n' "$*" || true; }
 have() { command -v "$1" >/dev/null 2>&1; }
 
 UBUNTU_VER=$(lsb_release -rs 2>/dev/null | cut -d. -f1)
 UBUNTU_VER=${UBUNTU_VER:-0}
 
-log "=== Base packages (apt) ==="
+say "== base packages"
 sudo apt update || true
 sudo apt install -y \
   git curl unzip zsh build-essential wget tmux || true
 
-log ""
-log "=== Rust / Cargo toolchain ==="
+say "== rustup"
 if ! have rustup; then
-  log "Installing rustup..."
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 fi
 
@@ -27,16 +28,15 @@ if [ -f "$HOME/.cargo/env" ]; then
 fi
 
 if ! have cargo; then
-  log "cargo not found after rustup install."
-  log "Try: source \"$HOME/.cargo/env\" then re-run."
+  say "cargo not found after rustup install."
+  say "Try: source \"$HOME/.cargo/env\" then re-run."
   exit 1
 fi
 
 rustup toolchain install stable >/dev/null 2>&1 || true
 rustup default stable >/dev/null 2>&1 || true
 
-log ""
-log "=== fzf ==="
+say "== fzf"
 if ! have fzf; then
   if [ "$UBUNTU_VER" -ge 20 ]; then
     sudo apt install -y fzf || true
@@ -50,8 +50,7 @@ if ! have fzf; then
   fi
 fi
 
-log ""
-log "=== zoxide ==="
+say "== zoxide"
 if ! have zoxide; then
   if [ "$UBUNTU_VER" -ge 22 ]; then
     sudo apt install -y zoxide || true
@@ -61,14 +60,12 @@ if ! have zoxide; then
   fi
 fi
 
-log ""
-log "=== Starship ==="
+say "== starship"
 if ! have starship; then
   curl -fsSL https://starship.rs/install.sh | sh -s -- -y
 fi
 
-log ""
-log "=== Oh-My-Zsh + plugins ==="
+say "== oh-my-zsh + plugins"
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
   RUNZSH=no KEEP_ZSHRC=yes \
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" || true
@@ -83,14 +80,12 @@ if [ -d "$ZSH_DIR" ]; then
   [ -d "$ZSH_DIR/custom/plugins/fzf-tab" ] || git clone https://github.com/Aloxaf/fzf-tab "$ZSH_DIR/custom/plugins/fzf-tab"
 fi
 
-log ""
-log "=== Atuin ==="
+say "== atuin"
 if ! have atuin; then
   curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh || true
 fi
 
-log ""
-log "=== Cargo-installed CLIs (Rust tools) ==="
+say "== cargo tools"
 
 # These are Rust-based tools you already use in this dotfiles repo.
 # `cargo install` is idempotent-ish: it will error if already installed; we handle that gracefully.
@@ -112,12 +107,12 @@ log ""
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$REPO_DIR"
 
-log "=== Link dotfiles into ~ ==="
+say "== link dotfiles"
 # Canonical linking in this repo is `relink.sh` (direct symlinks).
 if [ -x "$REPO_DIR/relink.sh" ]; then
   "$REPO_DIR/relink.sh" link
 else
-  log "relink.sh not found/executable; falling back to stow."
+  say "relink.sh not found; falling back to stow"
   if ! have stow; then
     log "Installing stow (requires sudo)..."
     sudo apt update || true
@@ -127,8 +122,7 @@ else
   stow -t "$HOME" zsh tmux starship yazi scripts
 fi
 
-log ""
-log "Done."
-log "- Restart your shell to pick up PATH changes: exec zsh"
-log "- If you installed broot via cargo, add its shell function (run once): br --install"
+say "== done"
+say "Restart shell: exec zsh"
+say "Broot shell function (optional): br --install"
 
