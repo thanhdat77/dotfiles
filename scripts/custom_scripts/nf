@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# nf — fuzzy find file by NAME, open in nvim
+# search order: current dir → sesh sessions → sesh/zoxide dirs
+# usage: nf [query]
+
+_collect_dirs() {
+  echo "$(pwd)"
+  # active sesh session paths
+  sesh list -t 2>/dev/null | while IFS= read -r s; do
+    tmux display-message -t "$s" -p "#{pane_current_path}" 2>/dev/null || true
+  done
+  # zoxide dirs via sesh
+  sesh list -z 2>/dev/null
+}
+
+DIRS=$(
+  _collect_dirs | sort -u | while IFS= read -r d; do
+    [ -d "$d" ] && echo "$d"
+  done
+)
+
+result=$(
+  echo "$DIRS" | xargs -d'\n' fd --hidden --type f 2>/dev/null | sort -u | \
+  fzf --query="${*}" \
+      --prompt="  nf > " \
+      --preview="bat --color=always --style=numbers {}" \
+      --preview-window="right:60%"
+)
+
+[ -z "$result" ] && exit 0
+cd "$(dirname "$result")" && nvim "$result"

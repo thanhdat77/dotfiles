@@ -30,6 +30,13 @@ if command -v fzf >/dev/null 2>&1; then
     [ -f /usr/share/doc/fzf/examples/completion.zsh ] && source /usr/share/doc/fzf/examples/completion.zsh
 fi
 
+# --- Sesh completion ---
+if command -v sesh >/dev/null 2>&1; then
+    mkdir -p ~/.zsh/completions
+    sesh completion zsh > ~/.zsh/completions/_sesh
+    fpath=(~/.zsh/completions $fpath)
+fi
+
 # --- Starship prompt ---
 if command -v starship >/dev/null 2>&1; then
     eval "$(starship init zsh)"
@@ -95,6 +102,8 @@ alias ts="sesh connect \$(sesh list | fzf --height 50% --reverse --border-label 
 
 # opens documentation through fzf (eg: git,zsh etc.)
 alias fman="compgen -c | fzf | xargs man"
+alias nf="~/custom_scripts/nf"
+alias nr="~/custom_scripts/nr"
 
 alias ld="lazydocker"
 

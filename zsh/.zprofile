@@ -6,6 +6,8 @@ export PATH="$HOME/custom_scripts:$PATH"
 export TMUX_CONF="$HOME/.config/tmux/tmux.conf"
 # zsh thing
 export ZSH="$HOME/.oh-my-zsh"
+# start ship
+export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml" 
 
 # ------------FZF--------------
 # Set up fzf key bindings and fuzzy completion

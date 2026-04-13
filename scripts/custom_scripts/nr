@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# nr — fuzzy find file by CONTENT (ripgrep), open in nvim at matched line
+# search order: current dir → sesh sessions → sesh/zoxide dirs
+# usage: nr [query]
+
+_collect_dirs() {
+  echo "$(pwd)"
+  # active sesh session paths
+  sesh list -t 2>/dev/null | while IFS= read -r s; do
+    tmux display-message -t "$s" -p "#{pane_current_path}" 2>/dev/null || true
+  done
+  # zoxide dirs via sesh
+  sesh list -z 2>/dev/null
+}
+
+DIRS=$(
+  _collect_dirs | sort -u | while IFS= read -r d; do
+    [ -d "$d" ] && echo "$d"
+  done
+)
+
+result=$(
+  echo "$DIRS" | xargs -d'\n' rg --line-number --hidden --color=always "" 2>/dev/null | \
+  fzf --query="${*}" \
+      --prompt="  nr > " \
+      --ansi \
+      --delimiter=":" \
+      --preview="bat --color=always --style=numbers --highlight-line {2} {1}" \
+      --preview-window="right:60%"
+)
+
+[ -z "$result" ] && exit 0
+file=$(echo "$result" | cut -d: -f1)
+line=$(echo "$result" | cut -d: -f2)
+cd "$(dirname "$file")" && nvim +"$line" "$file"
