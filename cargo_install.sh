@@ -36,6 +36,16 @@ fi
 rustup toolchain install stable >/dev/null 2>&1 || true
 rustup default stable >/dev/null 2>&1 || true
 
+say "== neovim"
+if ! have nvim; then
+  NVIM_DIR="/opt/nvim-linux-x86_64"
+  NVIM_URL="https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz"
+  curl -fsSL "$NVIM_URL" -o /tmp/nvim.tar.gz
+  sudo tar -C /opt -xzf /tmp/nvim.tar.gz
+  rm /tmp/nvim.tar.gz
+  say "nvim installed to $NVIM_DIR"
+fi
+
 say "== fzf"
 if ! have fzf; then
   if [ "$UBUNTU_VER" -ge 20 ]; then
@@ -97,6 +107,7 @@ cargo_install() {
 }
 
 # Prefer cargo versions when you explicitly want Rustup/Cargo-managed tools.
+cargo_install sesh
 cargo_install ripgrep
 cargo_install fd-find
 cargo_install bat
@@ -121,9 +132,10 @@ say "== stow dotfiles"
 STOW_LINKS=(
   "$HOME/.zshrc"
   "$HOME/.tmux.conf"
-  "$HOME/.config/starship.toml"
+  "$HOME/.config/starship"
   "$HOME/.config/yazi"
   "$HOME/.config/atuin"
+  "$HOME/.config/nvim"
   "$HOME/custom_scripts"
 )
 for link in "${STOW_LINKS[@]}"; do
@@ -133,7 +145,12 @@ for link in "${STOW_LINKS[@]}"; do
   fi
 done
 
-stow -t "$HOME" zsh tmux starship yazi scripts atuin
+stow -t "$HOME" zsh tmux starship yazi scripts atuin nvim
+
+say "== nvim plugins"
+if have nvim; then
+  nvim --headless "+Lazy! sync" +qa 2>&1 || true
+fi
 
 say "== done"
 say "Restart shell: exec zsh"

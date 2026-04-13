@@ -90,17 +90,12 @@ alias tmux="tmux -f $TMUX_CONF"
 # Keep tmux pane_current_path in sync with shell CWD
 [[ -n "$TMUX" ]] && precmd() { tmux refresh-client -S 2>/dev/null; }
 alias a="attach"
-# calls the tmux new session script
-alias tns="~/custom_scripts/tmux-sessionizer"
+# sesh - modern tmux session manager
+alias ts="sesh connect \$(sesh list | fzf --height 50% --reverse --border-label ' sesh ' --border --prompt '⚡  ')"
 
-# fzf 
-# called from ~/custom_scripts/
-alias nlof="~/custom_scripts/fzf_listoldfiles.sh"
 # opens documentation through fzf (eg: git,zsh etc.)
 alias fman="compgen -c | fzf | xargs man"
 
-# zoxide (called from ~/scripts/)
-alias nzo="~/custom_scripts/zoxide_openfiles_nvim.sh"
 alias ld="lazydocker"
 
 # Next level of an ls 
