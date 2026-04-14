@@ -41,7 +41,7 @@ cargo_install bat           # bat
 cargo_install eza           # eza
 cargo_install broot         # br
 cargo_install atuin         # atuin
-cargo_install yazi-fm       # yazi
-cargo_install yazi-cli      # ya
+# cargo_install yazi-fm       # yazi
+# cargo_install yazi-cli      # ya # those bug for now use git
 
 say "cargo done"

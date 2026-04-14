@@ -37,8 +37,13 @@ for link in "${STOW_LINKS[@]}"; do
   fi
 done
 
-stow -t "$HOME" zsh tmux starship yazi scripts atuin nvim
-info "Dotfiles linked."
+for pkg in zsh tmux starship yazi scripts atuin nvim; do
+  if stow -t "$HOME" "$pkg" 2>/dev/null; then
+    info "stow $pkg — ok"
+  else
+    info "stow $pkg — FAILED (skipped)"
+  fi
+done
 
 # nvim plugin sync
 say "nvim plugin sync"

@@ -70,4 +70,13 @@ if ! have sesh; then
   rm /tmp/sesh.tar.gz
 fi
 
+if ! have yazi; then
+  info "Installing yazi..."
+  curl -fsSL "https://github.com/sxyazi/yazi/releases/latest/download/yazi-x86_64-unknown-linux-gnu.zip" -o /tmp/yazi.zip
+  unzip -q /tmp/yazi.zip -d /tmp/yazi-extracted
+  sudo mv /tmp/yazi-extracted/yazi-*/yazi /usr/local/bin/
+  sudo mv /tmp/yazi-extracted/yazi-*/ya /usr/local/bin/
+  rm -rf /tmp/yazi.zip /tmp/yazi-extracted
+fi
+
 say "linux done"
