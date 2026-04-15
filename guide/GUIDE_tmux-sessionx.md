@@ -19,24 +19,21 @@ C-Space  O
 | Type | Fuzzy search |
 | `Ctrl+p` / `Ctrl+n` | Select up / down |
 
-### Session actions
+### Actions
 
 | Key | Action |
 |-----|--------|
 | `Enter` | Switch to session |
 | `Ctrl+r` | Rename selected session |
-| `Ctrl+e` | New window in selected session |
-| `Ctrl+f` | New session from zoxide dir |
+| `Ctrl+e` | Expand PWD — create session from local dirs |
+| `Ctrl+w` | Window mode — list all windows with preview |
+| `Ctrl+t` | Tree mode — sessions + windows tree |
+| `Ctrl+b` | Back to session list |
+| `Ctrl+x` | Open `~/.config` (or custom path) |
+| `Ctrl+/` | tmuxinator sessions |
+| `Ctrl+g` | fzf-marks |
 | `Alt+Backspace` | Kill selected session |
 | `Esc` | Close popup |
-
-### View modes
-
-| Key | Action |
-|-----|--------|
-| `Ctrl+w` | Window mode — show windows instead of sessions |
-| `Ctrl+t` | Tree mode — show session tree |
-| `Ctrl+b` | Back to session list |
 
 ### Preview
 
