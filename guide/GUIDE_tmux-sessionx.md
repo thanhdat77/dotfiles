@@ -1,72 +1,56 @@
-# tmux Session Manager Guide
+# tmux-sessionx Guide
 
 Prefix key: `C-Space` (Ctrl+Space)
 
----
-
-## sessionx — `C-Space O`
-
-Full session manager with fuzzy search.
-
-### Open
+## Open
 
 ```
 C-Space  O
 ```
 
-### Navigation
+---
+
+## Inside the popup
+
+### Navigate
 
 | Key | Action |
 |-----|--------|
-| `j` / `↓` | Move down |
-| `k` / `↑` | Move up |
-| Type anything | Fuzzy search by name |
+| Type | Fuzzy search |
+| `Ctrl+p` / `Ctrl+n` | Select up / down |
 
-### Actions inside popup
+### Session actions
 
 | Key | Action |
 |-----|--------|
 | `Enter` | Switch to session |
-| `Ctrl-n` | Create new session |
-| `Ctrl-r` | Rename session |
-| `Ctrl-d` | Delete session |
-| `Tab` | Multi-select |
-| `Ctrl-x` | Kill all selected |
-| `Esc` / `q` | Close popup |
+| `Ctrl+r` | Rename selected session |
+| `Ctrl+e` | New window in selected session |
+| `Ctrl+f` | New session from zoxide dir |
+| `Alt+Backspace` | Kill selected session |
+| `Esc` | Close popup |
 
----
+### View modes
 
-## sesh — `C-Space f`
+| Key | Action |
+|-----|--------|
+| `Ctrl+w` | Window mode — show windows instead of sessions |
+| `Ctrl+t` | Tree mode — show session tree |
+| `Ctrl+b` | Back to session list |
 
-Quick jump to any session or directory (includes zoxide history).
+### Preview
 
-```
-C-Space  f
-```
-
-Type to fuzzy-search → `Enter` to switch or create.
+| Key | Action |
+|-----|--------|
+| `Ctrl+u` | Scroll preview up |
+| `Ctrl+d` | Scroll preview down |
 
 ---
 
 ## Practice Flow
 
-1. Create sessions: `C-Space :new-session -s work` then `:new-session -s personal`
-2. Open sessionx: `C-Space O`
-3. Use `j/k` to navigate
-4. Type `wo` to fuzzy-search "work"
-5. Press `Enter` to switch
-6. Try `Ctrl-r` to rename
-7. Try `Ctrl-d` to delete
-
----
-
-## Quick Reference
-
-| Shortcut | Tool | Best for |
-|----------|------|----------|
-| `C-Space O` | sessionx | Manage sessions (rename, delete, create) |
-| `C-Space f` | sesh | Jump to any session or directory |
-| `C-Space r` | — | Reload tmux config |
-| `C-Space \|` | — | Split pane horizontal |
-| `C-Space -` | — | Split pane vertical |
-| `C-Space m` | — | Maximize/restore pane |
+1. `C-Space O` — open sessionx
+2. Type to search, `Enter` to switch
+3. `Ctrl+r` — rename a session
+4. `Ctrl+w` — see all windows across sessions
+5. `Alt+Backspace` — kill a session you don't need
