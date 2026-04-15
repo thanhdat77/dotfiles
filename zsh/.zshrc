@@ -71,7 +71,7 @@ fi
 # Keep these settings ABOVE any `bindkey` calls that should apply after vi-mode.
 #
 # Optional: allow `jk` to exit insert mode quickly.
-ZVM_VI_INSERT_ESCAPE_BINDKEY='jk'
+ZVM_VI_INSERT_ESCAPE_BINDKEY='ff'
 # Optional: show mode changes in the prompt faster (reduces lag with heavy prompts).
 ZVM_REFRESH_PROMPT_ON_MODE_CHANGE=true
 
@@ -97,13 +97,13 @@ alias tmux="tmux -f $TMUX_CONF"
 # Keep tmux pane_current_path in sync with shell CWD
 [[ -n "$TMUX" ]] && precmd() { tmux refresh-client -S 2>/dev/null; }
 alias a="attach"
-# sesh - modern tmux session manager
-alias ts="sesh connect \$(sesh list | fzf --height 50% --reverse --border-label ' sesh ' --border --prompt '⚡  ')"
+# sesh - smart session switcher (zoxide-aware)
+alias st="~/custom_scripts/sesh-smart-connect"
 
 # opens documentation through fzf (eg: git,zsh etc.)
 alias fman="compgen -c | fzf | xargs man"
-alias nf="~/custom_scripts/nf"
-alias nr="~/custom_scripts/nr"
+alias nf="~/custom_scripts/nvim-find-file"
+alias nr="~/custom_scripts/nvim-find-content"
 
 alias ld="lazydocker"
 

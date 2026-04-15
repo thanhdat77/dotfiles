@@ -1,0 +1,35 @@
+#!/usr/bin/env zsh
+# ts — smart tmux session switcher via sesh + zoxide
+# usage: ts [pattern]
+#   pattern given:
+#     1 zoxide match  → connect directly, no popup
+#     2+ zoxide match → fzf over those matches only
+#     0 zoxide match  → full sesh list with pattern pre-filled
+#   no pattern        → full sesh list fzf picker
+
+query="$*"
+
+_fzf_sesh() {
+  fzf \
+    --height 50% --reverse --border \
+    --border-label "${1:- sesh }" \
+    --prompt '⚡  ' \
+    ${2:+--query "$2"}
+}
+
+if [[ -n "$query" ]]; then
+  matches=(${(f)"$(zoxide query --list "$query" 2>/dev/null)"})
+
+  if (( ${#matches} == 1 )); then
+    sesh connect "${matches[1]}"
+    exit 0
+  elif (( ${#matches} > 1 )); then
+    selected=$(printf '%s\n' "${matches[@]}" | _fzf_sesh " sesh: $query ")
+    [[ -n "$selected" ]] && sesh connect "$selected"
+    exit 0
+  fi
+  # 0 matches → fall through to full picker with query pre-filled
+fi
+
+selected=$(sesh list | _fzf_sesh ' sesh ' "$query")
+[[ -n "$selected" ]] && sesh connect "$selected"
