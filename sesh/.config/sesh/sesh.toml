@@ -1,0 +1,14 @@
+# sesh configuration
+# https://github.com/joshmedeski/sesh
+
+[default_session]
+startup_command = ""
+
+[[session]]
+name = "dotfiles"
+path = "~/dotfiles"
+startup_command = "nvim"
+
+[[session]]
+name = "config"
+path = "~/.config"

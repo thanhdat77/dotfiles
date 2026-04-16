@@ -1,0 +1,41 @@
+#!/usr/bin/env zsh
+# ts — smart tmux session switcher via sesh + zoxide + television (tv)
+# usage: ts [pattern]
+
+query="$*"
+
+# Hàm giao diện Television mượn từ tv
+_tv_sesh() {
+  local input_query="$1"
+  
+  if [[ -n "$input_query" ]]; then
+    # --preview-command: Hiển thị trạng thái các pane trong session
+    tv "$input_query" --preview-command "sesh preview {}"
+  else
+    tv --preview-command "sesh preview {}"
+  fi
+}
+
+if [[ -n "$query" ]]; then
+  # Lấy danh sách thư mục khớp từ zoxide
+  matches=(${(f)"$(zoxide query --list "$query" 2>/dev/null)"})
+
+  # Nếu chỉ có 1 kết quả duy nhất từ zoxide -> Nhảy thẳng vào không cần hỏi
+  if (( ${#matches} == 1 )); then
+    sesh connect "${matches[1]}"
+    exit 0
+  
+  # Nếu có nhiều hơn 1 kết quả từ zoxide -> Dùng tv để chọn trong đống đó
+  elif (( ${#matches} > 1 )); then
+    selected=$(printf '%s\n' "${matches[@]}" | _tv_sesh "$query")
+    [[ -n "$selected" ]] && sesh connect "$selected"
+    exit 0
+  fi
+fi
+
+selected=$(sesh list | _tv_sesh "$query")
+
+# 3. Kết nối nếu người dùng chọn một mục
+if [[ -n "$selected" ]]; then
+  sesh connect "$selected"
+fi

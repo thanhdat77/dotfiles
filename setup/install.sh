@@ -25,6 +25,8 @@ STOW_LINKS=(
   "$HOME/.tmux.conf"
   "$HOME/.config/starship"
   "$HOME/.config/yazi"
+  "$HOME/.config/sesh"
+  "$HOME/.config/television"
   "$HOME/.config/atuin"
   "$HOME/.config/nvim"
   "$HOME/custom_scripts"
@@ -37,7 +39,7 @@ for link in "${STOW_LINKS[@]}"; do
   fi
 done
 
-for pkg in zsh tmux starship yazi scripts atuin nvim; do
+for pkg in zsh tmux starship yazi scripts atuin nvim sesh television; do
   if stow -t "$HOME" "$pkg" 2>/dev/null; then
     info "stow $pkg — ok"
   else
