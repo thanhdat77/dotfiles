@@ -56,17 +56,21 @@ fi
 
 # neovim, sesh
 say "STAGE 4: binary installs"
+LOCAL_BIN="$HOME/.local/bin"
+mkdir -p "$LOCAL_BIN"
+
 if ! have nvim; then
   info "Installing neovim..."
   curl -fsSL "https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz" -o /tmp/nvim.tar.gz
-  sudo tar -C /opt -xzf /tmp/nvim.tar.gz
+  tar -C "$HOME/.local" -xzf /tmp/nvim.tar.gz
+  ln -sf "$HOME/.local/nvim-linux-x86_64/bin/nvim" "$LOCAL_BIN/nvim"
   rm /tmp/nvim.tar.gz
 fi
 
 if ! have sesh; then
   info "Installing sesh..."
   curl -fsSL "https://github.com/joshmedeski/sesh/releases/latest/download/sesh_Linux_x86_64.tar.gz" -o /tmp/sesh.tar.gz
-  sudo tar -C /usr/local/bin -xzf /tmp/sesh.tar.gz sesh
+  tar -C "$LOCAL_BIN" -xzf /tmp/sesh.tar.gz sesh
   rm /tmp/sesh.tar.gz
 fi
 
@@ -74,8 +78,8 @@ if ! have yazi; then
   info "Installing yazi..."
   curl -fsSL "https://github.com/sxyazi/yazi/releases/latest/download/yazi-x86_64-unknown-linux-gnu.zip" -o /tmp/yazi.zip
   unzip -q /tmp/yazi.zip -d /tmp/yazi-extracted
-  sudo mv /tmp/yazi-extracted/yazi-*/yazi /usr/local/bin/
-  sudo mv /tmp/yazi-extracted/yazi-*/ya /usr/local/bin/
+  mv /tmp/yazi-extracted/yazi-*/yazi "$LOCAL_BIN/"
+  mv /tmp/yazi-extracted/yazi-*/ya "$LOCAL_BIN/"
   rm -rf /tmp/yazi.zip /tmp/yazi-extracted
 fi
 
