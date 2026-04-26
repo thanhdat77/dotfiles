@@ -1,21 +1,30 @@
 return {
   {
-    "rose-pine/neovim",
-    name = "rose-pine",
+    "projekt0n/github-nvim-theme",
+    lazy = false,
     priority = 1000,
-    config = function()
-      require("rose-pine").setup({
-        variant = "dawn",
+  },
 
-        -- 🎨 THIS is where you add it
-        on_highlights = function(hl, c)
-          hl.Normal = { bg = "#ffffff"  }
-          hl.NormalFloat = { bg = "#f2f2f2" }
-          hl.SignColumn = { bg = "#f2f2f2" }
-        end,
-      })
-
-      vim.cmd("colorscheme rose-pine")
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "github_light",
+    },
+  },
+  {
+    "nvim-lualine/lualine.nvim",
+    opts = function(_, opts)
+      opts.options.theme = "auto"
     end,
+  },
+
+  {
+    "akinsho/bufferline.nvim",
+    opts = {
+      options = {
+        separator_style = "thin",
+        always_show_bufferline = true,
+      },
+    },
   },
 }
