@@ -1,0 +1,22 @@
+gui:
+  theme:
+    activeBorderColor:
+      - green
+      - bold
+    inactiveBorderColor:
+      - default
+  sidePanelWidth: 0.2
+  expandFocusedSidePanel: true
+os:
+  editPreset: "nvim-remote"
+customCommands:
+  - key: "D"
+    description: "Open diffview (full VS Code style diff)"
+    command: 'nvim -c "DiffviewOpen"'
+    context: "global"
+    output: terminal
+  - key: "F"
+    description: "File history in diffview"
+    command: 'nvim -c "DiffviewFileHistory {{.SelectedFile.Name}}"'
+    context: "files"
+    output: terminal

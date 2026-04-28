@@ -29,6 +29,7 @@ STOW_LINKS=(
   "$HOME/.config/television"
   "$HOME/.config/atuin"
   "$HOME/.config/nvim"
+  "$HOME/.config/lazygit/config.yml"
   "$HOME/custom_scripts"
 )
 
@@ -36,10 +37,13 @@ for link in "${STOW_LINKS[@]}"; do
   if [ -L "$link" ]; then
     rm "$link"
     log "Removed old symlink: $link"
+  elif [ -f "$link" ]; then
+    rm "$link"
+    log "Removed old file: $link"
   fi
 done
 
-for pkg in zsh tmux starship yazi scripts atuin nvim sesh television; do
+for pkg in zsh tmux starship yazi scripts atuin nvim sesh television lazygit; do
   if stow -t "$HOME" "$pkg" 2>/dev/null; then
     info "stow $pkg — ok"
   else
