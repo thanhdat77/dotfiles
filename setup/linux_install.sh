@@ -83,4 +83,18 @@ if ! have yazi; then
   rm -rf /tmp/yazi.zip /tmp/yazi-extracted
 fi
 
+# win32yank — WSL2 clipboard bridge
+if grep -qi microsoft /proc/version 2>/dev/null && ! have win32yank.exe; then
+  info "Installing win32yank (WSL2 clipboard)..."
+  curl -fsSL "https://github.com/equalsraf/win32yank/releases/latest/download/win32yank-x64.zip" -o /tmp/win32yank.zip
+  unzip -q /tmp/win32yank.zip win32yank.exe -d "$LOCAL_BIN"
+  chmod +x "$LOCAL_BIN/win32yank.exe"
+  rm /tmp/win32yank.zip
+fi
+
+if ! have distant; then
+  info "Installing distant (remote nvim server)..."
+  curl -fsSL https://sh.distant.dev | sh -s -- --install-dir "$LOCAL_BIN" --no-modify-path || true
+fi
+
 say "linux done"
