@@ -7,7 +7,7 @@ startup_command = ""
 [[session]]
 name = "dotfiles"
 path = "~/dotfiles"
-startup_command = "nvim"
+startup_command = ""
 
 [[session]]
 name = "config"
