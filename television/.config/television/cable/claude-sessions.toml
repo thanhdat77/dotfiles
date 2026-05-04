@@ -1,0 +1,52 @@
+[metadata]
+name = "claude-sessions"
+description = "Browse and resume Claude Code sessions"
+requirements = ["fd", "python3"]
+
+[source]
+command = "fd -t f -e jsonl . ~/.claude/projects --base-directory ~ 2>/dev/null"
+
+[preview]
+command = """python3 -c "
+import json, sys, os, datetime
+path = os.path.expanduser('~/' + sys.argv[1])
+proj = path.split('/projects/')[1].split('/')[0].replace('-home-fenix-', '~/').replace('-', '/')
+lines = open(path).readlines()
+sid = ''
+for l in lines:
+    try:
+        d = json.loads(l)
+        if 'sessionId' in d: sid = d['sessionId']
+    except: pass
+size = len(lines)
+mtime = datetime.datetime.fromtimestamp(os.path.getmtime(path)).strftime('%Y-%m-%d %H:%M')
+print(f'Project : {proj}')
+print(f'Session : {sid}')
+print(f'Modified: {mtime}')
+print(f'Messages: {size} lines')
+print(f'Resume  : claude --resume {sid}')
+" '{}' 2>/dev/null"""
+
+[keybindings]
+enter = "actions:resume"
+ctrl-d = ["actions:delete", "reload_source"]
+
+[actions.resume]
+description = "Resume session in new terminal"
+command = """python3 -c "
+import json, sys, os
+path = os.path.expanduser('~/' + sys.argv[1])
+for l in open(path):
+    try:
+        d = json.loads(l)
+        if 'sessionId' in d:
+            print(d['sessionId'])
+            break
+    except: pass
+" '{}' | xargs -I{} claude --resume {}"""
+mode = "execute"
+
+[actions.delete]
+description = "Delete session file"
+command = "rm ~/'{}'"
+mode = "fork"
