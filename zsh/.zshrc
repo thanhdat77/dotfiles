@@ -72,8 +72,14 @@ fi
 #
 # Optional: allow `jk` to exit insert mode quickly.
 ZVM_VI_INSERT_ESCAPE_BINDKEY='ff'
-# Optional: show mode changes in the prompt faster (reduces lag with heavy prompts).
 ZVM_REFRESH_PROMPT_ON_MODE_CHANGE=true
+autoload -Uz edit-command-line
+
+autoload zmv
+#example zmv '(*).log' '$1.txt' or zmv -W '*.log' '*.txt'| there is -i -n
+zle -N edit-command-line
+# Bind to Ctrl-e
+bindkey '^e' edit-command-line
 
 export EDITOR=nvim
 export VISUAL=nvim
@@ -85,7 +91,11 @@ bindkey -M viins '^N' down-line-or-history
 #-----------------------------------------
 # -------------------ALIAS----------------------
 # These alias need to have the same exact space as written here
-
+# global
+alias -g NE='2>/dev/null'
+alias -g B='| bat --wrap=never' 
+# subfix
+alias -s sh='bash' 
 # other Aliases shortcuts
 alias c="clear"
 alias e="exit"
