@@ -71,7 +71,7 @@ fi
 # Keep these settings ABOVE any `bindkey` calls that should apply after vi-mode.
 #
 # Optional: allow `jk` to exit insert mode quickly.
-ZVM_VI_INSERT_ESCAPE_BINDKEY='ff'
+ZVM_VI_INSERT_ESCAPE_BINDKEY='wf'
 ZVM_REFRESH_PROMPT_ON_MODE_CHANGE=true
 autoload -Uz edit-command-line
 
