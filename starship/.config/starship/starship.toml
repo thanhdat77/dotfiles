@@ -227,8 +227,8 @@ disabled = false
 disabled = false
 success_symbol = "[I ](bold green)"
 error_symbol = "[X ](bold fg:red)"
-vimcmd_symbol              = "[N ](bold fg:green)"    # Normal
-vimcmd_replace_symbol      = "[R ](bold fg:red)"      # Replace
-vimcmd_replace_one_symbol  = "[r ](bold fg:yellow)"   # Replace one
-vimcmd_visual_symbol       = "[V ](bold fg:magenta)"  # Visual
+vimcmd_symbol              = "[N ](bold fg:bold blue)"    # Normal
+vimcmd_replace_symbol      = "[R ](bold fg:bold orange)"      # Replace
+vimcmd_replace_one_symbol  = "[r ](bold fg:bold yellow)"   # Replace one
+vimcmd_visual_symbol       = "[V ](bold fg:bold magenta)"  # Visual
 

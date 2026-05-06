@@ -20,8 +20,8 @@ DIRS=$(
 )
 
 result=$(
-  echo "$DIRS" | xargs -d'\n' fd --hidden --type f 2>/dev/null | sort -u | \
-  fzf --query="${*}" \
+  echo "$DIRS" | xargs -d'\n' fd --hidden --type f 2>/dev/null | sort -u |
+    fzf --query="${*}" \
       --prompt="  nf > " \
       --preview="bat --color=always --style=numbers {}" \
       --preview-window="right:60%"

@@ -26,9 +26,9 @@ dotfiles/
 
 ## Guides
 
-| Guide | Content |
-|-------|---------|
-| [GUIDE_sesh.md](guide/GUIDE_sesh.md) | Session switching with sesh + ts |
-| [GUIDE_tmux-sessionx.md](guide/GUIDE_tmux-sessionx.md) | Session manager UI |
-| [GUIDE_tmux-harpoon.md](guide/GUIDE_tmux-harpoon.md) | Window bookmarks |
-| [GUIDE_nvim-scripts.md](guide/GUIDE_nvim-scripts.md) | nf / nr fuzzy file open |
+| Guide                                                  | Content                          |
+| ------------------------------------------------------ | -------------------------------- |
+| [GUIDE_sesh.md](guide/GUIDE_sesh.md)                   | Session switching with sesh + ts |
+| [GUIDE_tmux-sessionx.md](guide/GUIDE_tmux-sessionx.md) | Session manager UI               |
+| [GUIDE_tmux-harpoon.md](guide/GUIDE_tmux-harpoon.md)   | Window bookmarks                 |
+| [GUIDE_nvim-scripts.md](guide/GUIDE_nvim-scripts.md)   | nf / nr fuzzy file open          |
