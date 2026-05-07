@@ -4,6 +4,11 @@
 [[ -f ~/.zprofile ]] && source ~/.zprofile
 
 export ZSH="$HOME/.oh-my-zsh"
+
+# Must be set BEFORE oh-my-zsh loads zsh-vi-mode plugin
+ZVM_VI_INSERT_ESCAPE_BINDKEY='wf'
+ZVM_REFRESH_PROMPT_ON_MODE_CHANGE=true
+
 # zsh plugins
 plugins=(
   git
@@ -66,13 +71,23 @@ if command -v wl-copy >/dev/null 2>&1; then
     alias clip="wl-copy"
 fi
 
-# ----- Vi mode (zsh-vi-mode plugin) -----
-# Plugin is loaded by Oh-My-Zsh via `plugins=(... zsh-vi-mode ...)`.
-# Keep these settings ABOVE any `bindkey` calls that should apply after vi-mode.
-#
-# Optional: allow `jk` to exit insert mode quickly.
-ZVM_VI_INSERT_ESCAPE_BINDKEY='wf'
-ZVM_REFRESH_PROMPT_ON_MODE_CHANGE=true
+# --- Atuin (shell history) ---
+[ -f "$HOME/.atuin/bin/env" ] && . "$HOME/.atuin/bin/env"
+if command -v atuin >/dev/null 2>&1; then
+    eval "$(atuin init zsh)"
+fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# --- Broot ---
+[ -f "$HOME/.config/broot/launcher/bash/br" ] && source "$HOME/.config/broot/launcher/bash/br"
+
+# if command -v tv >/dev/null 2>&1; then
+#   eval "$(tv init zsh)"
+# fi
+
 autoload zmv
 #example zmv '(*).log' '$1.txt' or zmv -W '*.log' '*.txt'| there is -i -n
 
@@ -83,15 +98,16 @@ function _tv_sesh() {
   zle reset-prompt
 }
 zle -N _tv_sesh
-bindkey '^F' _tv_sesh
 
 export EDITOR=nvim
 export VISUAL=nvim
 
-# Insert-mode bindings
-bindkey -M viins '^E' autosuggest-accept
-bindkey -M viins '^P' up-line-or-history
-bindkey -M viins '^N' forward-word
+function zvm_after_init() {
+  bindkey -M viins "^O" _tv_sesh
+  bindkey -M viins "^E" autosuggest-accept
+  bindkey -M viins "^P" up-line-or-history
+  bindkey -M viins "^N" forward-word
+}
 #-----------------------------------------
 # -------------------ALIAS----------------------
 # These alias need to have the same exact space as written here
@@ -121,24 +137,7 @@ alias nr="~/custom_scripts/nvim-find-content"
 
 alias ld="lazydocker"
 
-# tmux window switcher via television
-tw() {
-  local win
-  win=$(tv tmux-windows </dev/tty)
-  [[ -n "$win" ]] && tmux switch-client -t "$win"
-}
 
-# television: intercept update-channels to re-link custom cables from dotfiles
-tv() {
-  command tv "$@"
-  if [[ "$1" == "update-channels" ]]; then
-    local cable_dir="$HOME/.config/television/cable"
-    local dotfiles_cable="$HOME/dotfiles/television/.config/television/cable"
-    for f in "$dotfiles_cable"/*.toml; do
-      ln -sf "$f" "$cable_dir/$(basename "$f")"
-    done
-  fi
-}
 
 # Next level of an ls 
 # options :  --no-filesize --no-time --no-permissions 
@@ -181,16 +180,3 @@ alias dkprune="sudo docker system prune -af --volumes"
 alias nvim-ks='NVIM_APPNAME="nvim-ks" nvim'
 # ---------------------------------------
 [ -f "$HOME/.local/bin/env" ] && source "$HOME/.local/bin/env"
-
-# --- Atuin (shell history) ---
-[ -f "$HOME/.atuin/bin/env" ] && . "$HOME/.atuin/bin/env"
-if command -v atuin >/dev/null 2>&1; then
-    eval "$(atuin init zsh)"
-fi
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# --- Broot ---
-[ -f "$HOME/.config/broot/launcher/bash/br" ] && source "$HOME/.config/broot/launcher/bash/br"
