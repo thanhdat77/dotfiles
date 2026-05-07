@@ -73,21 +73,25 @@ fi
 # Optional: allow `jk` to exit insert mode quickly.
 ZVM_VI_INSERT_ESCAPE_BINDKEY='wf'
 ZVM_REFRESH_PROMPT_ON_MODE_CHANGE=true
-autoload -Uz edit-command-line
-
 autoload zmv
 #example zmv '(*).log' '$1.txt' or zmv -W '*.log' '*.txt'| there is -i -n
-zle -N edit-command-line
-# Bind to Ctrl-e
-bindkey '^e' edit-command-line
+
+# Ctrl-F → tv sesh
+function _tv_sesh() {
+  zle -I
+  ~/custom_scripts/sesh-smart-connect </dev/tty
+  zle reset-prompt
+}
+zle -N _tv_sesh
+bindkey '^F' _tv_sesh
 
 export EDITOR=nvim
 export VISUAL=nvim
 
-# Insert-mode bindings (these work nicely alongside zsh-autosuggestions)
+# Insert-mode bindings
 bindkey -M viins '^E' autosuggest-accept
 bindkey -M viins '^P' up-line-or-history
-bindkey -M viins '^N' down-line-or-history
+bindkey -M viins '^N' forward-word
 #-----------------------------------------
 # -------------------ALIAS----------------------
 # These alias need to have the same exact space as written here

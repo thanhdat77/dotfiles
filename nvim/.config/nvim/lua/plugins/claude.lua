@@ -4,6 +4,7 @@ return {
     { "<leader>a",  "",                          desc = "+ai",              mode = { "n", "v" } },
     { "<leader>at", "<cmd>ClaudeCode<cr>",       desc = "Toggle Claude" },
     { "<leader>af", "<cmd>ClaudeCodeFocus<cr>",  desc = "Focus Claude" },
+    { "<leader>an", "<cmd>ClaudeCode<cr>",              desc = "New Claude session" },
     { "<leader>ar", "<cmd>ClaudeCode --resume<cr>",   desc = "Resume Claude" },
     { "<leader>ac", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
     { "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>",  desc = "Add buffer" },
