@@ -7,13 +7,14 @@ set -euo pipefail
 VERBOSE="${VERBOSE:-0}"
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-say()  { printf '\n\033[1;32m==\033[0m %s\n' "$*"; }
+say() { printf '\n\033[1;32m==\033[0m %s\n' "$*"; }
 info() { printf '   %s\n' "$*"; }
-log()  { [ "$VERBOSE" = "1" ] && printf '   %s\n' "$*" || true; }
+log() { [ "$VERBOSE" = "1" ] && printf '   %s\n' "$*" || true; }
 have() { command -v "$1" >/dev/null 2>&1; }
 
 bash "$DOTFILES_DIR/setup/linux_install.sh"
 bash "$DOTFILES_DIR/setup/cargo_install.sh"
+bash "$DOTFILES_DIR/setup/update.sh"
 
 # stow dotfiles
 say "stow dotfiles"

@@ -6,9 +6,9 @@ set -euo pipefail
 
 VERBOSE="${VERBOSE:-0}"
 
-say()  { printf '\n\033[1;32m==\033[0m %s\n' "$*"; }
+say() { printf '\n\033[1;32m==\033[0m %s\n' "$*"; }
 info() { printf '   %s\n' "$*"; }
-log()  { [ "$VERBOSE" = "1" ] && printf '   %s\n' "$*" || true; }
+log() { [ "$VERBOSE" = "1" ] && printf '   %s\n' "$*" || true; }
 have() { command -v "$1" >/dev/null 2>&1; }
 
 UBUNTU_VER=$(lsb_release -rs 2>/dev/null | cut -d. -f1)
@@ -19,6 +19,10 @@ say "STAGE 1: base packages"
 sudo apt update -qq || true
 sudo apt install -y git curl unzip wget zsh build-essential tmux stow || true
 
+TPM_DIR="$HOME/.tmux/plugins/tpm"
+if [ ! -d "$TPM_DIR" ]; then
+    git clone https://github.com/tmux-plugins/tpm "$TPM_DIR" || true
+fi
 # oh-my-zsh + plugins
 say "STAGE 2: shell"
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
@@ -28,10 +32,10 @@ fi
 
 ZSH_PLUGINS="$HOME/.oh-my-zsh/custom/plugins"
 mkdir -p "$ZSH_PLUGINS"
-[ -d "$ZSH_PLUGINS/zsh-vi-mode" ]             || git clone https://github.com/jeffreytse/zsh-vi-mode            "$ZSH_PLUGINS/zsh-vi-mode"
-[ -d "$ZSH_PLUGINS/zsh-autosuggestions" ]     || git clone https://github.com/zsh-users/zsh-autosuggestions     "$ZSH_PLUGINS/zsh-autosuggestions"
+[ -d "$ZSH_PLUGINS/zsh-vi-mode" ] || git clone https://github.com/jeffreytse/zsh-vi-mode "$ZSH_PLUGINS/zsh-vi-mode"
+[ -d "$ZSH_PLUGINS/zsh-autosuggestions" ] || git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_PLUGINS/zsh-autosuggestions"
 [ -d "$ZSH_PLUGINS/zsh-syntax-highlighting" ] || git clone https://github.com/zsh-users/zsh-syntax-highlighting "$ZSH_PLUGINS/zsh-syntax-highlighting"
-[ -d "$ZSH_PLUGINS/fzf-tab" ]                 || git clone https://github.com/Aloxaf/fzf-tab                    "$ZSH_PLUGINS/fzf-tab"
+[ -d "$ZSH_PLUGINS/fzf-tab" ] || git clone https://github.com/Aloxaf/fzf-tab "$ZSH_PLUGINS/fzf-tab"
 
 # starship, fzf, zoxide
 say "STAGE 3: prompt & shell tools"
@@ -92,9 +96,9 @@ if grep -qi microsoft /proc/version 2>/dev/null && ! have win32yank.exe; then
   rm /tmp/win32yank.zip
 fi
 
-if ! have distant; then
-  info "Installing distant (remote nvim server)..."
-  curl -fsSL https://sh.distant.dev | sh -s -- --install-dir "$LOCAL_BIN" --no-modify-path || true
+if ! have tv; then
+  info "Installing tv"
+  curl -fsSL https://alexpasmantier.github.io/television/install.sh | bash
 fi
 
 say "linux done"
