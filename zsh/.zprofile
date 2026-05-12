@@ -1,5 +1,5 @@
 
-export LANG=en_US.UTF-8
+export LANG=C.UTF-8
 # Add local ~/scripts to the PATH
 export PATH="$HOME/custom_scripts:$PATH"
 # Tmux
@@ -24,4 +24,3 @@ export FZF_ALT_C_OPTS="--preview 'eza --icons=always --tree --color=always {} | 
 # fzf preview for tmux
 export FZF_TMUX_OPTS=" -p90%,70% "  
 # -----------------------------
-

@@ -103,7 +103,7 @@ export EDITOR=nvim
 export VISUAL=nvim
 
 function zvm_after_init() {
-  bindkey -M viins "^O" _tv_sesh
+  bindkey -M viins "^F" _tv_sesh
   bindkey -M viins "^E" autosuggest-accept
   bindkey -M viins "^P" up-line-or-history
   bindkey -M viins "^N" forward-word
@@ -148,7 +148,7 @@ alias tree="tree -L 3 -a -I '.git' --charset X "
 alias dtree="tree -L 3 -a -d -I '.git' --charset X "
 
 # lstr
-alias lstr="lstr --icons"
+alias lstr="eza --tree --level=2 --icons=always --group-directories-first ."
 
 # git aliases
 alias gt="git"
@@ -180,3 +180,11 @@ alias dkprune="sudo docker system prune -af --volumes"
 alias nvim-ks='NVIM_APPNAME="nvim-ks" nvim'
 # ---------------------------------------
 [ -f "$HOME/.local/bin/env" ] && source "$HOME/.local/bin/env"
+
+# pnpm
+export PNPM_HOME="/home/fenix/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end
