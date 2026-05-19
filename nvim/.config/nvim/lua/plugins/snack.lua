@@ -3,6 +3,7 @@ return {
   priority = 1000,
   lazy = false,
   opts = {
+    explorer = { enabled = false },
     notifier = { enabled = true },
     picker = {
       actions = {
@@ -20,5 +21,10 @@ return {
       },
     },
   },
-  keys = {},
+  keys = {
+    { "<leader>e", false },
+    { "<leader>E", false },
+    { "<leader>fe", false },
+    { "<leader>fE", false },
+  },
 }

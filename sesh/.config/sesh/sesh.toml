@@ -10,5 +10,10 @@ path = "~/dotfiles"
 startup_command = ""
 
 [[session]]
+name = "vihat"
+path = "~/workspace/vihat"
+startup_command = ""
+
+[[session]]
 name = "config"
 path = "~/.config"
