@@ -16,9 +16,15 @@ ansi = true
 
 [keybindings]
 enter = "actions:connect"
+ctrl-d = ["actions:kill", "reload_source"]
 
 [actions.connect]
 description = "Connect to selected session"
 
 command = "sesh connect '{strip_ansi|split: |last}'"
 mode = "execute"
+
+[actions.kill]
+description = "Kill selected tmux session"
+command = "tmux has-session -t '{strip_ansi|split: |last}' 2>/dev/null && tmux kill-session -t '{strip_ansi|split: |last}'"
+mode = "fork"
