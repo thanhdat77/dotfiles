@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+# zsh-only sesh launcher (outside tmux)
+
+if [[ -n "${TMUX:-}" ]]; then
+  exec "$HOME/custom_scripts/sesh-smart-connect" "$@"
+fi
+
+selected="$(sesh list -i | tv --ansi --preview-command "COLORTERM=truecolor CLICOLOR_FORCE=1 sesh preview {2}")"
+
+[[ -z "$selected" ]] && exit 0
+
+clean_name=$(echo "$selected" | awk '{print $NF}')
+exec sesh connect "$clean_name"

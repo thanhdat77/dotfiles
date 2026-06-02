@@ -5,7 +5,7 @@ requirements = ["sesh"]
 
 [source]
 command = [
-  "sesh list --i"
+  "sesh list -i"
 ]
 ansi = true
 

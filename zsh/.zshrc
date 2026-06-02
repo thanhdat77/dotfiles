@@ -91,19 +91,21 @@ export NVM_DIR="$HOME/.nvm"
 autoload zmv
 #example zmv '(*).log' '$1.txt' or zmv -W '*.log' '*.txt'| there is -i -n
 
-# Ctrl-F → tv sesh
-function _tv_sesh() {
-  zle -I
-  ~/custom_scripts/sesh-smart-connect </dev/tty
-  zle reset-prompt
+# Ctrl-F → queue sesh command, then run it as a normal shell command.
+# This avoids running TUI directly inside the ZLE widget.
+function _queue_sesh_cmd() {
+  BUFFER="$HOME/custom_scripts/sesh-zsh-picker"
+  zle accept-line
 }
-zle -N _tv_sesh
+zle -N _queue_sesh_cmd
 
 export EDITOR=nvim
 export VISUAL=nvim
 
 function zvm_after_init() {
-  bindkey -M viins "^F" _tv_sesh
+  bindkey -M emacs "^F" _queue_sesh_cmd
+  bindkey -M viins "^F" _queue_sesh_cmd
+  bindkey -M vicmd "^F" _queue_sesh_cmd
   bindkey -M viins "^E" autosuggest-accept
   bindkey -M viins "^P" up-line-or-history
   bindkey -M viins "^N" forward-word
