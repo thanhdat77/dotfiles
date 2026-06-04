@@ -109,6 +109,8 @@ function zvm_after_init() {
   bindkey -M viins "^E" autosuggest-accept
   bindkey -M viins "^P" up-line-or-history
   bindkey -M viins "^N" forward-word
+  bindkey -M emacs "^R" atuin-search
+  bindkey -M viins "^R" atuin-search-viins
 }
 #-----------------------------------------
 # -------------------ALIAS----------------------
