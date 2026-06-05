@@ -24,3 +24,7 @@ transparent_back()
 vim.api.nvim_create_autocmd("ColorScheme", {
   callback = transparent_back,
 })
+
+-- Auto save
+vim.opt.autowrite = true
+vim.opt.autowriteall = true
