@@ -128,8 +128,34 @@ alias vim="nvim"
 export TMUX_CONF="$HOME/.tmux.conf"
 # Tmux
 alias tmux="tmux -f $TMUX_CONF"
-# Keep tmux pane_current_path in sync with shell CWD
-[[ -n "$TMUX" ]] && precmd() { tmux refresh-client -S 2>/dev/null; }
+# Keep tmux pane_current_path in sync with shell CWD.
+# Special case: show full ssh command in the tmux window name while ssh is running.
+autoload -Uz add-zsh-hook
+
+_tmux_window_name_for_command() {
+  [[ -z "$TMUX" ]] && return
+
+  local cmd="$1"
+  if [[ "$cmd" == ssh\ * ]]; then
+    tmux set-window-option -q automatic-rename off 2>/dev/null
+    tmux set-window-option -q @ssh_window_name active 2>/dev/null
+    tmux rename-window "${cmd}" 2>/dev/null
+  fi
+}
+
+_tmux_window_name_for_prompt() {
+  [[ -z "$TMUX" ]] && return
+
+  tmux refresh-client -S 2>/dev/null
+
+  if [[ "$(tmux show-window-option -qv @ssh_window_name 2>/dev/null)" == "active" ]]; then
+    tmux set-window-option -qu @ssh_window_name 2>/dev/null
+    tmux set-window-option -q automatic-rename on 2>/dev/null
+  fi
+}
+
+add-zsh-hook preexec _tmux_window_name_for_command
+add-zsh-hook precmd _tmux_window_name_for_prompt
 alias a="attach"
 # sesh - smart session switcher (zoxide-aware)
 alias st="~/custom_scripts/sesh-smart-connect"
