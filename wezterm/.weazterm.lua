@@ -13,8 +13,15 @@ local main_color_dark = "#b39b6f"
 
 -- [WINDOW & GIAO DIỆN]
 config.window_padding = { left = 15, right = 15, top = 15, bottom = 10 }
-config.window_background_opacity = 1.0
+config.window_background_opacity = 0.86
 
+-- Blur/translucent background for tmux and shell.
+-- tmux itself cannot blur; it inherits transparency from the terminal.
+if wezterm.target_triple:find('windows') then
+  config.win32_system_backdrop = 'Acrylic'
+elseif wezterm.target_triple:find('darwin') then
+  config.macos_window_background_blur = 24
+end
 
 config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
 config.window_close_confirmation = 'AlwaysPrompt'
