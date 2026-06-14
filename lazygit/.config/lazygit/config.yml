@@ -9,6 +9,10 @@ gui:
   expandFocusedSidePanel: true
 os:
   editPreset: "nvim-remote"
+git:
+  pagers:
+    - pager: delta --light --paging=never --line-numbers
+      colorArg: always
 customCommands:
   - key: "D"
     description: "Open diffview (full VS Code style diff)"
