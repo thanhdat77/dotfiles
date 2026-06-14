@@ -91,7 +91,7 @@ export NVM_DIR="$HOME/.nvm"
 autoload zmv
 #example zmv '(*).log' '$1.txt' or zmv -W '*.log' '*.txt'| there is -i -n
 
-# Ctrl-F → queue sesh command, then run it as a normal shell command.
+# Ctrl-T → queue sesh command, then run it as a normal shell command.
 # This avoids running TUI directly inside the ZLE widget.
 function _queue_sesh_cmd() {
   BUFFER="$HOME/custom_scripts/sesh-zsh-picker"
@@ -103,15 +103,24 @@ export EDITOR=nvim
 export VISUAL=nvim
 
 function zvm_after_init() {
-  bindkey -M emacs "^F" _queue_sesh_cmd
-  bindkey -M viins "^F" _queue_sesh_cmd
-  bindkey -M vicmd "^F" _queue_sesh_cmd
+  bindkey -M emacs "^T" _queue_sesh_cmd
+  bindkey -M viins "^T" _queue_sesh_cmd
+  bindkey -M vicmd "^T" _queue_sesh_cmd
+  if zle -l fzf-file-widget >/dev/null 2>&1; then
+    bindkey -M emacs "^F" fzf-file-widget
+    bindkey -M viins "^F" fzf-file-widget
+    bindkey -M vicmd "^F" fzf-file-widget
+  fi
   bindkey -M viins "^E" autosuggest-accept
   bindkey -M viins "^P" up-line-or-history
   bindkey -M viins "^N" forward-word
   bindkey -M emacs "^R" atuin-search
   bindkey -M viins "^R" atuin-search-viins
 }
+
+# zsh-vi-mode is loaded by oh-my-zsh before this function is defined,
+# so apply the bindings explicitly as well.
+[[ -o interactive ]] && zvm_after_init
 #-----------------------------------------
 # -------------------ALIAS----------------------
 # These alias need to have the same exact space as written here
