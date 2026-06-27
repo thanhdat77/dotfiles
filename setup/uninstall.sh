@@ -12,7 +12,7 @@ have() { command -v "$1" >/dev/null 2>&1; }
 # unstow dotfiles
 say "unstow dotfiles"
 cd "$DOTFILES_DIR"
-stow -D -t "$HOME" zsh tmux starship yazi scripts atuin nvim 2>/dev/null || true
+stow -D -t "$HOME" zsh tmux starship yazi scripts atuin nvim herdr 2>/dev/null || true
 info "Symlinks removed."
 
 # cargo packages

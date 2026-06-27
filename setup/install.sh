@@ -31,8 +31,11 @@ STOW_LINKS=(
   "$HOME/.config/atuin"
   "$HOME/.config/nvim"
   "$HOME/.config/lazygit/config.yml"
+  "$HOME/.config/herdr/config.toml"
   "$HOME/custom_scripts"
 )
+
+bash "$DOTFILES_DIR/setup/backup_existing.sh" "${STOW_LINKS[@]}"
 
 for link in "${STOW_LINKS[@]}"; do
   if [ -L "$link" ]; then
@@ -44,7 +47,7 @@ for link in "${STOW_LINKS[@]}"; do
   fi
 done
 
-for pkg in zsh tmux starship yazi scripts atuin nvim sesh television lazygit; do
+for pkg in zsh tmux starship yazi scripts atuin nvim sesh television lazygit herdr; do
   if stow -t "$HOME" "$pkg" 2>/dev/null; then
     info "stow $pkg — ok"
   else
