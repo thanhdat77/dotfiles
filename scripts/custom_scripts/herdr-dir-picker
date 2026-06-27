@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+have() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+candidates=$(
+  {
+    if [ -n "${HERDR_ACTIVE_PANE_CWD:-}" ]; then
+      printf '%s\n' "$HERDR_ACTIVE_PANE_CWD"
+    fi
+
+    if have zoxide; then
+      zoxide query -l
+    elif have fd; then
+      fd -t d -H -d 3 . "${HOME:-/}" 2>/dev/null
+    else
+      find "${HOME:-/}" -maxdepth 3 -type d 2>/dev/null
+    fi
+  } | awk 'NF && !seen[$0]++'
+)
+
+dir=$(printf '%s\n' "$candidates" | fzf --prompt='dir> ' --height=80% --border) || exit 0
+[ -n "$dir" ] || exit 0
+
+label=${dir##*/}
+label=${label:-workspace}
+
+exec herdr workspace create --cwd "$dir" --label "$label"
