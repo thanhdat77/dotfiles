@@ -3,13 +3,13 @@
 
 # Show first-run notification setup on startup.
 # Missing also shows onboarding; set false after you've chosen.
-onboarding = false
+# onboarding = true
 
 [theme]
 # Built-in themes: catppuccin, terminal, tokyo-night, dracula, nord,
 #                  gruvbox, one-dark, solarized, kanagawa, rose-pine,
 #                  vesper
-name = "tokyo-night-day"
+# name = "catppuccin"
 
 # Follow host terminal light/dark appearance and switch Herdr UI themes.
 # Existing manual behavior is unchanged unless this is true.
@@ -19,18 +19,11 @@ name = "tokyo-night-day"
 
 # Override individual color tokens on top of the base theme.
 # Accepts: hex (#rrggbb), named colors, rgb(r,g,b), or panel_bg = "reset"
-auto_switch = false
-[theme.custom]
-panel_bg = "reset"
-accent = "#ea9d34"
-surface_dim = "#d9d3cb"
-overlay0 = "#9893a5"
-text = "#575279"
-green = "#6a9955"
-yellow = "#d19a00"
-red = "#ef4444"
-blue = "#569cd6"
-mauve = "#b07d62"
+# [theme.custom]
+# panel_bg = "reset"
+# accent = "#f5c2e7"
+# red = "#ff6188"
+# green = "#a6e3a1"
 
 [terminal]
 # Executable used for new interactive panes.
@@ -66,17 +59,7 @@ mauve = "#b07d62"
 # Named punctuation such as minus, comma, ampersand, plus, and backtick is also accepted.
 # Most reliable direct bindings are ctrl+letter, function keys, and explicit modified chords.
 # alt+..., cmd/super, and punctuation-with-modifiers may depend on your terminal/tmux setup.
-prefix = "ctrl+space"
-settings = "prefix+shift+s"
-workspace_picker = ["prefix+f", "prefix+s"]
-detach = "prefix+d"
-zoom = "prefix+m"
-
-[[keys.command]]
-key = "prefix+t"
-type = "pane"
-command = "~/custom_scripts/herdr-dir-picker"
-description = "pick dir and open workspace"
+# prefix = "ctrl+b"
 
 # Prefix-mode actions
 # help = "prefix+?"
@@ -140,9 +123,10 @@ description = "pick dir and open workspace"
 
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
-[keys.indexed]
-tabs = "ctrl"
-workspaces = "ctrl+shift"
+# [keys.indexed]
+# tabs = ""       # e.g. "ctrl" makes ctrl+1..9 switch tabs directly
+# workspaces = "" # e.g. "ctrl+shift" makes ctrl+shift+1..9 switch workspaces directly
+# agents = ""     # e.g. "alt" makes alt+1..9 focus agent rows directly
 
 # [worktrees]
 # directory = "~/.herdr/worktrees"
@@ -164,7 +148,7 @@ workspaces = "ctrl+shift"
 # Capture mouse input for Herdr's mouse UI.
 # Set false to let the terminal handle normal clicks, such as Cmd-clicking URLs.
 # Pane apps like lazygit and btop can still receive mouse when they request it.
-mouse_capture = true
+# mouse_capture = true
 
 # Optional modifier that forwards right-click hold/drag gestures to pane apps instead of opening Herdr's pane menu.
 # Empty/off disables this. Shift is intentionally unsupported because terminals commonly reserve Shift+mouse.
@@ -183,7 +167,7 @@ mouse_capture = true
 
 # Ask for a tab name before creating a new tab.
 # Set false to create tabs immediately with generated names.
-prompt_new_tab_name = false
+# prompt_new_tab_name = true
 
 # Draw borders around split panes.
 # pane_borders = true
@@ -200,7 +184,7 @@ prompt_new_tab_name = false
 
 # Accent color for highlights, borders, and navigation UI.
 # Accepts: hex (#89b4fa), named colors (cyan, blue, magenta), or rgb(r,g,b)
-accent = "#ea9d34"
+# accent = "cyan"
 
 # Background notification popup delivery
 [ui.toast]
@@ -278,3 +262,10 @@ pane_history = false
 # Maximum scrollback buffer size in bytes retained per pane terminal.
 # Matches Ghostty's default scrollback-limit behavior.
 # scrollback_limit_bytes = 10000000
+
+#@ custom overrides I added before (open these sections if you want them back):
+#@ - [theme] / [theme.custom]: tokyo-night-day + custom palette
+#@ - [keys]: prefix = ctrl+space, settings = prefix+shift+s, workspace_picker = prefix+f/prefix+s, detach = prefix+d, zoom = prefix+m
+#@ - [keys.indexed]: tabs = ctrl, workspaces = ctrl+shift
+#@ - [ui]: prompt_new_tab_name = false, mouse_capture = true, accent = #ea9d34
+#@ - [[keys.command]]: prefix+t -> ~/custom_scripts/herdr-dir-picker
