@@ -138,6 +138,13 @@ type = "plugin_action"
 command = "herdr-picker-plus.open"
 description = "workdir picker"
 
+#@ Git-aware read-only file viewer in a split pane.
+[[keys.command]]
+key = "prefix+shift+f"
+type = "plugin_action"
+command = "herdr-file-viewer.open-file-viewer"
+description = "file viewer"
+
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
 # [keys.indexed]

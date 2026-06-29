@@ -41,6 +41,7 @@ Config file:
 | `ctrl+1..9` | switch tab trực tiếp |
 | `prefix+g` | goto picker |
 | `ctrl+t` / `prefix+t` | Herdr Picker Plus |
+| `prefix+shift+f` | file viewer split |
 | `prefix+shift+n` | new workspace |
 | `ctrl+shift+1..9` | switch workspace trực tiếp |
 | `prefix+v` | split vertical |
@@ -59,9 +60,10 @@ Config file:
 2. `ctrl+t` hoặc `prefix+t` để mở Herdr Picker Plus
 3. Chọn workspace/project/dir/agent/server
 4. `Ctrl-S` trong picker để lọc server, Enter sẽ tạo/focus workspace `server: NAME` và chạy `ssh NAME`
-5. Split pane cho app + log + agent
-6. Dùng `prefix+d` để detach khi xong
-7. Vào lại bằng `herdr` hoặc chọn workspace từ picker
+5. `prefix+shift+f` để mở file viewer read-only cạnh pane hiện tại
+6. Split pane cho app + log + agent
+7. Dùng `prefix+d` để detach khi xong
+8. Vào lại bằng `herdr` hoặc chọn workspace từ picker
 
 ## Terminal helper
 
@@ -76,6 +78,7 @@ Config file:
 
 - Mouse đang bật.
 - `ctrl+t` và `prefix+t` mở Herdr Picker Plus.
+- `prefix+shift+f` mở `herdr-file-viewer`.
 - `prefix+f` / `prefix+s` vẫn là workspace picker built-in của Herdr.
 - Theme đang map theo palette tmux của mình.
 - Herdr config này được stow từ repo dotfiles.
