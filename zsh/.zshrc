@@ -21,6 +21,21 @@ plugins=(
 
 [ -f "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
 
+# --- Pastel ZLE highlights: match Neovim selection/yank/search palette ---
+# region = visual selection, paste = yank/paste flash, isearch = incremental search
+zle_highlight=(
+  region:bg=#eadcff,fg=#4a3b69
+  paste:bg=#d8f3dc,fg=#1b5e20
+  isearch:bg=#cfe8ff,fg=#0f3a5f
+  suffix:bg=#cfe8ff,fg=#0f3a5f
+)
+if (( ${+ZSH_HIGHLIGHT_STYLES} )); then
+  ZSH_HIGHLIGHT_STYLES[region]='bg=#eadcff,fg=#4a3b69'
+  ZSH_HIGHLIGHT_STYLES[paste]='bg=#d8f3dc,fg=#1b5e20'
+  ZSH_HIGHLIGHT_STYLES[isearch]='bg=#cfe8ff,fg=#0f3a5f'
+fi
+export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --color=hl:#0f3a5f,hl+:#0f3a5f,bg+:#cfe8ff,pointer:#1b5e20,marker:#1b5e20,prompt:#4a3b69"
+
 # --- Zoxide ---
 if command -v zoxide >/dev/null 2>&1; then
     eval "$(zoxide init zsh)"
@@ -91,21 +106,21 @@ export NVM_DIR="$HOME/.nvm"
 autoload zmv
 #example zmv '(*).log' '$1.txt' or zmv -W '*.log' '*.txt'| there is -i -n
 
-# Ctrl-T → queue sesh command, then run it as a normal shell command.
+# Ctrl-T → queue Herdr workdir picker, then run it as a normal shell command.
 # This avoids running TUI directly inside the ZLE widget.
-function _queue_sesh_cmd() {
-  BUFFER="$HOME/custom_scripts/sesh-zsh-picker"
+function _queue_herdr_workdir_cmd() {
+  BUFFER="herdr plugin action invoke herdr-picker-plus.open"
   zle accept-line
 }
-zle -N _queue_sesh_cmd
+zle -N _queue_herdr_workdir_cmd
 
 export EDITOR=nvim
 export VISUAL=nvim
 
 function zvm_after_init() {
-  bindkey -M emacs "^T" _queue_sesh_cmd
-  bindkey -M viins "^T" _queue_sesh_cmd
-  bindkey -M vicmd "^T" _queue_sesh_cmd
+  bindkey -M emacs "^T" _queue_herdr_workdir_cmd
+  bindkey -M viins "^T" _queue_herdr_workdir_cmd
+  bindkey -M vicmd "^T" _queue_herdr_workdir_cmd
   if zle -l fzf-file-widget >/dev/null 2>&1; then
     bindkey -M emacs "^F" fzf-file-widget
     bindkey -M viins "^F" fzf-file-widget
