@@ -24,7 +24,8 @@ Config file:
 
 - `tmux`-style, nhưng mouse-native
 - giữ session/pane chạy sau khi detach
-- hợp cho agent, log, shell, repo workspaces
+- Herdr Picker Plus thay `sesh` cho workspace/server/agent navigation
+- hợp cho agent, log, shell, repo workspaces, SSH server panes
 
 ## Phím chính
 
@@ -39,7 +40,7 @@ Config file:
 | `prefix+n` / `prefix+p` | next / previous tab |
 | `ctrl+1..9` | switch tab trực tiếp |
 | `prefix+g` | goto picker |
-| `prefix+t` | dir picker → new workspace |
+| `ctrl+t` / `prefix+t` | Herdr Picker Plus |
 | `prefix+shift+n` | new workspace |
 | `ctrl+shift+1..9` | switch workspace trực tiếp |
 | `prefix+v` | split vertical |
@@ -55,18 +56,27 @@ Config file:
 ## Workflow hay dùng
 
 1. Mở Herdr bằng `herdr`
-2. `prefix+f` để mở picker kiểu sesh
-3. `prefix+t` để chọn dir rồi mở workspace mới
-4. Chọn / tạo workspace
+2. `ctrl+t` hoặc `prefix+t` để mở Herdr Picker Plus
+3. Chọn workspace/project/dir/agent/server
+4. `Ctrl-S` trong picker để lọc server, Enter sẽ tạo/focus workspace `server: NAME` và chạy `ssh NAME`
 5. Split pane cho app + log + agent
 6. Dùng `prefix+d` để detach khi xong
 7. Vào lại bằng `herdr` hoặc chọn workspace từ picker
 
+## Terminal helper
+
+```bash
+~/custom_scripts/herdr-sync-server s92
+```
+
+- sync local Herdr config lên server khi cần
+- mặc định không xoá file remote; thêm `--delete` nếu muốn mirror
+
 ## Ghi chú
 
 - Mouse đang bật.
-- `prefix+f` là đường vào kiểu sesh picker, `prefix+s` giữ làm alias.
-- `prefix+t` mở dir picker bằng zoxide/fzf rồi tạo workspace mới.
+- `ctrl+t` và `prefix+t` mở Herdr Picker Plus.
+- `prefix+f` / `prefix+s` vẫn là workspace picker built-in của Herdr.
 - Theme đang map theo palette tmux của mình.
 - Herdr config này được stow từ repo dotfiles.
 - Nếu sửa config bằng tay, nhớ reload `herdr server reload-config`.
