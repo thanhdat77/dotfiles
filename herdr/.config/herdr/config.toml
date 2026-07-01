@@ -104,6 +104,8 @@ reload_config = "prefix+shift+r"
 # split_horizontal = "prefix+minus"
 # close_pane = "prefix+x"
 # zoom = "prefix+z"       # legacy alias: fullscreen
+#@ Custom: tmux-like maximize current pane.
+zoom = "prefix+m"
 # resize_mode = "prefix+r"
 # toggle_sidebar = "prefix+b"
 
