@@ -6,3 +6,4 @@ change under `openspec/changes/` before implementing.
 ## Output preference
 - After changing files, show a short delta/diff comparison before handoff when practical.
 - Prefer concise `git diff --stat` plus focused diff snippets over long full-file dumps.
+- When `delta` is available, prefer `git diff -- <files> | delta --side-by-side --line-numbers` for readable compare output.
