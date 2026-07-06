@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+import sys
+import termios
+import tty
+import select
+
+fd = sys.stdin.fileno()
+old = termios.tcgetattr(fd)
+try:
+    tty.setraw(fd)
+    print("Press a key combo; Ctrl-C exits. Shows raw bytes received by this pane.\r")
+    while True:
+        r, _, _ = select.select([sys.stdin], [], [], None)
+        if not r:
+            continue
+        data = sys.stdin.buffer.read1(64)
+        if data == b"\x03":
+            print("\rCtrl-C exit\r")
+            break
+        hexs = " ".join(f"{b:02x}" for b in data)
+        text = "".join(chr(b) if 32 <= b < 127 else "." for b in data)
+        print(f"\rbytes: {hexs:<40} ascii: {text}\r")
+finally:
+    termios.tcsetattr(fd, termios.TCSADRAIN, old)
