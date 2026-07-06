@@ -38,6 +38,7 @@ return {
   keys = {
     { "<C-/>", function() Snacks.terminal() end, mode = { "n", "t" }, desc = "Toggle Terminal" },
     { "<C-_>", function() Snacks.terminal() end, mode = { "n", "t" }, desc = "Toggle Terminal" },
+    { "<M-/>", function() Snacks.terminal() end, mode = { "n", "t" }, desc = "Toggle Terminal" },
     { "<leader>e", false },
     { "<leader>E", false },
     { "<leader>fe", false },
