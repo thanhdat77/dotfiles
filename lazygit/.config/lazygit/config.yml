@@ -5,11 +5,16 @@ gui:
       - bold
     inactiveBorderColor:
       - default
-  sidePanelWidth: 0.2
+  screenMode: full
+  sidePanelWidth: 0.4
   expandFocusedSidePanel: true
+  expandedSidePanelWeight: 4
 os:
   editPreset: "nvim-remote"
 git:
+  log:
+    showGraph: always
+    showWholeGraph: true
   pagers:
     - pager: delta --light --paging=never --line-numbers
       colorArg: always
