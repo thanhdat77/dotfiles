@@ -5,7 +5,7 @@ gui:
       - bold
     inactiveBorderColor:
       - default
-  screenMode: full
+  screenMode: half
   sidePanelWidth: 0.4
   expandFocusedSidePanel: true
   expandedSidePanelWeight: 4

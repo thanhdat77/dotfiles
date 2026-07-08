@@ -216,7 +216,10 @@ alias gh-create='gh repo create --private --source=. --remote=origin && git push
 alias nvim-scratch="NVIM_APPNAME=nvim-scratch nvim"
 
 # lazygit
-alias lg="lazygit"
+alias lg="lazygit log"      # graph/commits focused by default
+alias lgb="lazygit branch"  # branches focused
+alias lgs="lazygit status"  # status/files focused
+alias lga="lazygit"         # normal LazyGit start
 
 # docker aliases
 alias dk="sudo docker"
