@@ -11,7 +11,7 @@ ${custom.giturl}\
 $git_branch\
 $git_state\
 $git_status\
- $nodejs$python$golang$rust$docker_context$c$java$kotlin$haskell$php\
+ ${custom.uv}$conda$nodejs$python$golang$rust$docker_context$c$java$kotlin$haskell$php\
 $cmd_duration\
 $line_break\
 $character
@@ -163,6 +163,19 @@ format =  '  on [$symbol$branch]($style)[](black)'
 [git_status]
 format = ' [($all_status$ahead_behind )]($style)'
 
+[custom.uv]
+description = "Show uv in Python projects managed by uv"
+symbol = "󰔛 uv"
+command = "uv --version | awk '{print $2}'"
+detect_files = ["uv.lock"]
+style = "bold fg:yellow"
+format = '[ $symbol( $output) ]($style)'
+
+[conda]
+symbol = "🅒 "
+format = '[ $symbol$environment ]($style)'
+ignore_base = false
+
 [nodejs]
 symbol = ""
 format = '[ $symbol( $version) ]($style)'
@@ -201,7 +214,7 @@ format = '[ $symbol( $version) ]($style)'
 [python]
 symbol = ""
 
-format = '[$symbol( $version)]($style)'
+format = '[ $symbol( $version)( $virtualenv) ]($style)'
 
 
 [docker_context]
