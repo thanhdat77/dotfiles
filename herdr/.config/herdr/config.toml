@@ -84,7 +84,7 @@ reload_config = "prefix+shift+r"
 # next_agent = ""         # optional, unset by default
 # focus_agent = ""        # optional indexed binding, e.g. "prefix+alt+1..9"
 # remote_image_paste = "ctrl+v" # only active in herdr --remote; empty disables raw-key image paste
-# new_tab = "prefix+c"
+new_tab = ""
 # rename_tab = "prefix+shift+t"
 # previous_tab = "prefix+p"
 # next_tab = "prefix+n"
@@ -140,11 +140,18 @@ type = "plugin_action"
 command = "herdr-picker-plus.open"
 description = "workdir picker"
 
-#@ Git-aware read-only file viewer in a split pane.
+#@ Server-aware new tab: reconnects automatically when current workspace has .herdr-server.toml.
 [[keys.command]]
-key = "prefix+shift+f"
+key = "prefix+c"
 type = "plugin_action"
-command = "herdr-file-viewer.open-file-viewer"
+command = "herdr-server-aware.new-server-tab"
+description = "smart server tab"
+
+#@ Git-aware read-only file viewer in its own tab.
+[[keys.command]]
+key = "prefix+f"
+type = "plugin_action"
+command = "herdr-file-viewer.open-file-viewer-tab"
 description = "file viewer"
 
 # Legacy indexed shortcut config is still parsed for compatibility.
@@ -213,7 +220,7 @@ show_agent_labels_on_pane_borders = true
 # accent = "cyan"
 
 # Background notification popup delivery
-agent_panel_sort = "priority"
+agent_panel_sort = "spaces"
 [ui.toast]
 # off = disable pop-up notifications
 # herdr = show in-app toasts

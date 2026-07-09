@@ -1,16 +1,29 @@
 #!/usr/bin/env zsh
 # sesh-smart-connect [query]
 
+notify_ssc() {
+  local msg="$1"
+  if [[ -n "$TMUX" ]]; then
+    command tmux display-message -d 1000 "$msg"
+  else
+    print -r -- "$msg"
+  fi
+}
+
 query="$*"
 
 if [[ -n "$query" ]]; then
   matches=(${(f)"$(zoxide query --list "$query" 2>/dev/null)"})
   if (( ${#matches} == 1 )); then
     sesh connect "${matches[1]}"
+    notify_ssc "SSC done: ${matches[1]:t}"
     exit 0
   elif (( ${#matches} > 1 )); then
     selected=$(printf '%s\n' "${matches[@]}" | tv --ansi --preview-command "COLORTERM=truecolor sesh preview {}")
-    [[ -n "$selected" ]] && sesh connect "$selected"
+    if [[ -n "$selected" ]]; then
+      sesh connect "$selected"
+      notify_ssc "SSC done: ${selected:t}"
+    fi
     exit 0
   fi
 fi
@@ -20,4 +33,5 @@ selected=$(sesh list -i | tv --ansi --preview-command "COLORTERM=truecolor CLICO
 if [[ -n "$selected" ]]; then
   clean_name=$(echo "$selected" | awk '{print $NF}')
   sesh connect "$clean_name"
+  notify_ssc "SSC done: $clean_name"
 fi

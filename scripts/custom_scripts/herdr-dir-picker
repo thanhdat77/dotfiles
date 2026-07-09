@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+query="${1:-}"
+
 have() {
   command -v "$1" >/dev/null 2>&1
 }
@@ -21,7 +23,9 @@ candidates=$(
   } | awk 'NF && !seen[$0]++'
 )
 
-dir=$(printf '%s\n' "$candidates" | fzf --prompt='dir> ' --height=80% --border) || exit 0
+[ -n "$candidates" ] || exit 0
+
+dir="$(printf '%s\n' "$candidates" | tv --no-sort --hide-help-panel --input-prompt='dir> ' --preview-command 'ls -la {0} 2>/dev/null | head -80' --input "$query")" || exit 0
 [ -n "$dir" ] || exit 0
 
 label=${dir##*/}
