@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+mode="tv"
+query="${1:-}"
+
+if [[ "${1:-}" == "--fzf" ]]; then
+  mode="fzf"
+  query="${2:-}"
+fi
+
+require_picker() {
+  if [[ "$mode" == "tv" ]] && ! command -v tv >/dev/null 2>&1; then
+    echo "tv not found" >&2
+    exit 1
+  fi
+  if [[ "$mode" == "fzf" ]] && ! command -v fzf >/dev/null 2>&1; then
+    echo "fzf not found" >&2
+    exit 1
+  fi
+}
+
+list_workspaces() {
+  herdr workspace list | python3 -c 'import json, sys
+payload = json.load(sys.stdin)
+spaces = payload.get("result", {}).get("workspaces", [])
+for w in spaces:
+    mark = "*" if w.get("focused") else " "
+    print("\t".join([
+        w.get("workspace_id", ""),
+        f"{mark} {w.get('label', '')}",
+        f"tabs:{w.get('tab_count', 0)}",
+        f"panes:{w.get('pane_count', 0)}",
+        w.get("agent_status", "unknown"),
+    ]))'
+}
+
+create_current_workspace() {
+  local label="${PWD##*/}"
+  exec herdr workspace create --cwd "$PWD" --label "${label:-workspace}"
+}
+
+pick_workspace() {
+  local choices="$1"
+
+  if [[ "$mode" == "fzf" ]]; then
+    printf '%s\n' "$choices" | fzf \
+      --prompt='workspace> ' \
+      --delimiter=$'\t' \
+      --with-nth=2,3,4,5 \
+      --preview='herdr workspace get {1}' \
+      --preview-window=right:60% \
+      --query="$query"
+    return
+  fi
+
+  local tmp
+  tmp="$(mktemp)"
+  trap 'rm -f "$tmp"' RETURN
+  printf '%s\n' "$choices" > "$tmp"
+  tv \
+    --no-sort \
+    --hide-help-panel \
+    --input-prompt='workspace> ' \
+    --source-command "cat '$tmp'" \
+    --source-entry-delimiter $'\t' \
+    --source-output '{}' \
+    --preview-command 'herdr workspace get {0}' \
+    --input "$query"
+}
+
+require_picker
+choices="$(list_workspaces)"
+[[ -n "$choices" ]] || create_current_workspace
+
+selected="$(pick_workspace "$choices")" || exit 0
+[[ -n "$selected" ]] || exit 0
+
+exec herdr workspace focus "${selected%%$'\t'*}"

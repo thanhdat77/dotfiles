@@ -3,32 +3,38 @@ set -euo pipefail
 
 query="${1:-}"
 
-have() {
+command_exists() {
   command -v "$1" >/dev/null 2>&1
 }
 
-candidates=$(
-  {
-    if [ -n "${HERDR_ACTIVE_PANE_CWD:-}" ]; then
-      printf '%s\n' "$HERDR_ACTIVE_PANE_CWD"
-    fi
+list_dirs() {
+  if [[ -n "${HERDR_ACTIVE_PANE_CWD:-}" ]]; then
+    printf '%s\n' "$HERDR_ACTIVE_PANE_CWD"
+  fi
 
-    if have zoxide; then
-      zoxide query -l
-    elif have fd; then
-      fd -t d -H -d 3 . "${HOME:-/}" 2>/dev/null
-    else
-      find "${HOME:-/}" -maxdepth 3 -type d 2>/dev/null
-    fi
-  } | awk 'NF && !seen[$0]++'
-)
+  if command_exists zoxide; then
+    zoxide query -l
+  elif command_exists fd; then
+    fd -t d -H -d 3 . "${HOME:-/}" 2>/dev/null
+  else
+    find "${HOME:-/}" -maxdepth 3 -type d 2>/dev/null
+  fi
+}
 
-[ -n "$candidates" ] || exit 0
+pick_dir() {
+  tv \
+    --no-sort \
+    --hide-help-panel \
+    --input-prompt='dir> ' \
+    --preview-command 'ls -la {0} 2>/dev/null | head -80' \
+    --input "$query"
+}
 
-dir="$(printf '%s\n' "$candidates" | tv --no-sort --hide-help-panel --input-prompt='dir> ' --preview-command 'ls -la {0} 2>/dev/null | head -80' --input "$query")" || exit 0
-[ -n "$dir" ] || exit 0
+candidates="$(list_dirs | awk 'NF && !seen[$0]++')"
+[[ -n "$candidates" ]] || exit 0
 
-label=${dir##*/}
-label=${label:-workspace}
+dir="$(printf '%s\n' "$candidates" | pick_dir)" || exit 0
+[[ -n "$dir" ]] || exit 0
 
-exec herdr workspace create --cwd "$dir" --label "$label"
+label="${dir##*/}"
+exec herdr workspace create --cwd "$dir" --label "${label:-workspace}"

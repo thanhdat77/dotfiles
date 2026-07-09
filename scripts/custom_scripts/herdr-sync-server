@@ -13,35 +13,42 @@ EOF
 delete_flag=()
 hosts=()
 
-for arg in "$@"; do
-  case "$arg" in
-    --delete)
-      delete_flag=(--delete)
-      ;;
-    -h|--help)
-      usage
-      exit 0
-      ;;
-    *)
-      hosts+=("$arg")
-      ;;
-  esac
-done
+parse_args() {
+  for arg in "$@"; do
+    case "$arg" in
+      --delete) delete_flag=(--delete) ;;
+      -h|--help) usage; exit 0 ;;
+      *) hosts+=("$arg") ;;
+    esac
+  done
 
-if [[ ${#hosts[@]} -eq 0 ]]; then
-  usage
-  exit 2
-fi
+  if [[ ${#hosts[@]} -eq 0 ]]; then
+    usage
+    exit 2
+  fi
+}
 
-src="${HERDR_SYNC_SOURCE:-$HOME/dotfiles/herdr/.config/herdr/}"
-if [[ ! -d "$src" ]]; then
-  echo "Herdr config source not found: $src" >&2
-  exit 1
-fi
+config_source() {
+  local src="${HERDR_SYNC_SOURCE:-$HOME/dotfiles/herdr/.config/herdr/}"
+  if [[ ! -d "$src" ]]; then
+    echo "Herdr config source not found: $src" >&2
+    exit 1
+  fi
+  printf '%s\n' "$src"
+}
 
-for host in "${hosts[@]}"; do
+sync_host() {
+  local host="$1"
+  local src="$2"
+
   echo "==> $host"
   ssh "$host" 'mkdir -p ~/.config/herdr'
   rsync -av "${delete_flag[@]}" "$src" "$host:~/.config/herdr/"
   ssh "$host" 'herdr server reload-config >/dev/null 2>&1 || true'
+}
+
+parse_args "$@"
+src="$(config_source)"
+for host in "${hosts[@]}"; do
+  sync_host "$host" "$src"
 done
