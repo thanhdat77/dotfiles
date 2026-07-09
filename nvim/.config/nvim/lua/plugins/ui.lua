@@ -66,30 +66,33 @@ return {
   },
   {
     "mikavilpas/yazi.nvim",
+    version = "*",
     event = "VeryLazy",
+    dependencies = {
+      { "nvim-lua/plenary.nvim", lazy = true },
+    },
     keys = {
       {
-        "<leader>ey",
-        function()
-          require("yazi").yazi()
-        end,
-        desc = "Open yazi at the current file",
+        "<leader>y",
+        "<cmd>Yazi<cr>",
+        mode = { "n", "v" },
+        desc = "Open Yazi (current file)",
       },
-      -- Mở Yazi tại thư mục gốc của project
       {
-        "<leader>cw",
-        function()
-          require("yazi").yazi(nil, vim.fn.getcwd())
-        end,
-        desc = "Open yazi at the current working directory",
+        "<leader>Y",
+        "<cmd>Yazi cwd<cr>",
+        desc = "Open Yazi (cwd)",
+      },
+      {
+        "<C-Up>",
+        "<cmd>Yazi toggle<cr>",
+        desc = "Resume Yazi",
       },
     },
     opts = {
-      -- Các tùy chọn hiển thị
-      open_for_directories = true, -- Thay thế netrw bằng yazi khi mở một thư mục
-      use_relative_path = true,
-      floating_window_prefs = {
-        border = "rounded", -- Viền bo tròn cho sang trọng (phù hợp với style của bạn)
+      open_for_directories = false,
+      keymaps = {
+        show_help = "<f1>",
       },
     },
   },

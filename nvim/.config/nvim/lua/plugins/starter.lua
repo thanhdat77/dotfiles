@@ -4,6 +4,18 @@ return {
         local starter = require("mini.starter")
         local pad = string.rep(" ", 22)
 
+        local fenix_header = {
+            "█████▒▓█████  ███▄    █  ██▓▒██   ██▒",
+            "▓██   ▒▓█   ▀  ██ ▀█   █ ▓██▒▒▒ █ █ ▒░",
+            "▒████ ░▒███   ▓██  ▀█ ██▒▒██▒░░  █   ░",
+            "░▓█▒  ░▒▓█  ▄ ▓██▒  ▐▌██▒░██░ ░ █ █ ▒ ",
+            "░▒█░   ░▒████▒▒██░   ▓██░░██░▒██▒ ▒██▒",
+            " ▒ ░   ░░ ▒░ ░░ ▒░   ▒ ▒ ░▓  ▒▒ ░ ░▓ ░",
+            " ░      ░ ░  ░░ ░░   ░ ▒░ ▒ ░░░   ░▒ ░",
+            " ░ ░      ░      ░   ░ ░  ▒ ░ ░    ░  ",
+        }
+        opts.header = table.concat(vim.list_extend({ "" }, vim.list_extend(fenix_header, { "" })), "\n")
+
         opts.items = vim.list_extend(opts.items or {}, {
             starter.sections.recent_files(5, false, false),
         })
@@ -34,6 +46,49 @@ return {
 
         local starter = require("mini.starter")
         starter.setup(config)
+
+        local header_groups = {
+            "FenixHeader1",
+            "FenixHeader2",
+            "FenixHeader3",
+            "FenixHeader4",
+            "FenixHeader5",
+            "FenixHeader6",
+            "FenixHeader7",
+            "FenixHeader8",
+        }
+
+        local function set_header_highlights()
+            local colors = {
+                "#1d4ed8",
+                "#2563eb",
+                "#3b82f6",
+                "#60a5fa",
+                "#8b5cf6",
+                "#a78bfa",
+                "#c4b5fd",
+                "#ddd6fe",
+            }
+            for i, group in ipairs(header_groups) do
+                vim.api.nvim_set_hl(0, group, { fg = colors[i], bold = true })
+            end
+        end
+        set_header_highlights()
+        vim.api.nvim_create_autocmd("ColorScheme", {
+            group = vim.api.nvim_create_augroup("FenixStarterHeaderColors", { clear = true }),
+            callback = set_header_highlights,
+        })
+
+        vim.api.nvim_create_autocmd("User", {
+            pattern = "MiniStarterOpened",
+            group = vim.api.nvim_create_augroup("FenixStarterHeaderPaint", { clear = true }),
+            callback = function(args)
+                local buf = args.data and args.data.buf_id or vim.api.nvim_get_current_buf()
+                for i, group in ipairs(header_groups) do
+                    vim.api.nvim_buf_add_highlight(buf, -1, group, i, 0, -1)
+                end
+            end,
+        })
 
         vim.api.nvim_create_autocmd("User", {
             pattern = "LazyVimStarted",

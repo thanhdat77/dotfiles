@@ -11,3 +11,11 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged", "FocusLost" }, {
   pattern = "*",
   command = "silent! wall",
 })
+
+pcall(vim.api.nvim_del_augroup_by_name, "lazyvim_highlight_yank")
+vim.api.nvim_create_autocmd("TextYankPost", {
+  group = vim.api.nvim_create_augroup("UserPastelYank", { clear = true }),
+  callback = function()
+    vim.highlight.on_yank({ higroup = "YankHighlight", timeout = 180 })
+  end,
+})
