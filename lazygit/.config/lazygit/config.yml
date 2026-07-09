@@ -29,3 +29,8 @@ customCommands:
     command: 'nvim -c "DiffviewFileHistory {{.SelectedFile.Name}}"'
     context: "files"
     output: terminal
+  - key: "X"
+    description: "Diff current branch vs origin"
+    command: 'git fetch origin --quiet && nvim -c "DiffviewOpen origin/$(git branch --show-current)...HEAD"'
+    context: "global"
+    output: terminal
