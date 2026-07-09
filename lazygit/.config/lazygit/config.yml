@@ -31,6 +31,6 @@ customCommands:
     output: terminal
   - key: "X"
     description: "Diff current branch vs origin"
-    command: 'git fetch origin --quiet && nvim -c "DiffviewOpen origin/$(git branch --show-current)...HEAD"'
+    command: 'bash -lc ''git fetch origin --quiet && git diff --color=always origin/$(git branch --show-current)...HEAD | delta --side-by-side --line-numbers; read -r -n 1 -s -p "Press any key to return to LazyGit"'''
     context: "global"
     output: terminal
