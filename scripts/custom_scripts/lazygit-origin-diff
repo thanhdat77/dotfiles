@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+branch=$(git branch --show-current)
+if [[ -z "$branch" ]]; then
+  echo "Not on a branch."
+  read -r -n 1 -s -p "Press any key to return to LazyGit"
+  exit 0
+fi
+
+base="origin/$branch"
+git fetch origin --quiet
+
+if ! git rev-parse --verify --quiet "$base" >/dev/null; then
+  echo "No remote branch: $base"
+  read -r -n 1 -s -p "Press any key to return to LazyGit"
+  exit 0
+fi
+
+if git diff --quiet "$base...HEAD"; then
+  echo "No diff vs $base"
+else
+  git diff --color=always "$base...HEAD" | delta --side-by-side --line-numbers
+fi
+
+read -r -n 1 -s -p "Press any key to return to LazyGit"
