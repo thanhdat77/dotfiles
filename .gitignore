@@ -1,5 +1,6 @@
 test*
 .codegraph/
+.codex/
 openspec/
 *.log
 #Lazy state
