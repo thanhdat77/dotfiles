@@ -28,3 +28,6 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 -- Auto save
 vim.opt.autowrite = true
 vim.opt.autowriteall = true
+
+-- Don't wrap long lines
+vim.opt.wrap = false
