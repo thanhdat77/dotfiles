@@ -50,7 +50,7 @@ Config file:
 | `prefix+shift+h/j/k/l` | swap pane |
 | `prefix+x` | close pane |
 | `prefix+m` | zoom pane |
-| `prefix+r` | resize mode |
+| `prefix+r` | Reviewr code-review sidebar |
 | `prefix+b` | toggle sidebar |
 | `prefix+[` | copy mode |
 
@@ -62,8 +62,16 @@ Config file:
 4. `Ctrl-S` trong picker để lọc server, Enter sẽ tạo/focus workspace `server: NAME` và chạy `ssh NAME`
 5. `prefix+shift+f` để mở file viewer read-only cạnh pane hiện tại
 6. Split pane cho app + log + agent
-7. Dùng `prefix+d` để detach khi xong
-8. Vào lại bằng `herdr` hoặc chọn workspace từ picker
+7. `prefix+r` để mở Reviewr khi muốn đọc diff + comment lại cho agent
+8. Dùng `prefix+d` để detach khi xong
+9. Vào lại bằng `herdr` hoặc chọn workspace từ picker
+
+## Reviewr nhanh
+
+- Mở/tắt sidebar: `prefix+r`
+- Theme: `catppuccin-latte`, theo Herdr `[theme].name`
+- Trong Reviewr: `Tab` đổi pane, `j/k` di chuyển, `v` chọn dòng, `c` comment, `s` gửi comment về agent
+- Config plugin: `~/.config/herdr/plugins/config/persiyanov.reviewr/config.toml`
 
 ## Terminal helper
 

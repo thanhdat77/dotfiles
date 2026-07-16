@@ -1,0 +1,10 @@
+# reviewr plugin config
+# Match current Herdr theme: herdr/.config/herdr/config.toml -> [theme].name
+
+theme = "catppuccin-latte"
+
+# Keep default: right split next to the agent.
+
+# Open reviewr on top of the current tab when toggled.
+toggle_placement = "overlay"
+auto_open = false

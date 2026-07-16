@@ -126,19 +126,26 @@ zoom = "prefix+m"
 # type = "pane"
 # command = "lazygit"
 
-#@ Custom: Herdr-native workdir picker plugin.
+#@ Custom: Herdr Navigator plugin.
 [[keys.command]]
 key = "prefix+t"
 type = "plugin_action"
-command = "herdr-picker-plus.open"
-description = "workdir picker"
+command = "herdr-navigator.open"
+description = "Herdr Navigator"
 
-#@ Direct tmux-like workdir picker shortcut while moving away from sesh.
+#@ Direct Navigator shortcut.
 [[keys.command]]
 key = "ctrl+t"
 type = "plugin_action"
-command = "herdr-picker-plus.open"
-description = "workdir picker"
+command = "herdr-navigator.open"
+description = "Herdr Navigator"
+
+#@ Jump to the previous Navigator workspace.
+[[keys.command]]
+key = "prefix+l"
+type = "plugin_action"
+command = "herdr-navigator.jump-back"
+description = "last workspace"
 
 #@ Server-aware new tab: reconnects automatically when current workspace has .herdr-server.toml.
 [[keys.command]]
@@ -153,6 +160,13 @@ key = "prefix+f"
 type = "plugin_action"
 command = "herdr-file-viewer.open-file-viewer-tab"
 description = "file viewer"
+
+#@ Reviewr code-review sidebar.
+[[keys.command]]
+key = "prefix+r"
+type = "plugin_action"
+command = "persiyanov.reviewr.toggle"
+description = "review sidebar"
 
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
@@ -220,7 +234,7 @@ show_agent_labels_on_pane_borders = true
 # accent = "cyan"
 
 # Background notification popup delivery
-agent_panel_sort = "spaces"
+agent_panel_sort = "priority"
 [ui.toast]
 # off = disable pop-up notifications
 # herdr = show in-app toasts
